@@ -2,12 +2,13 @@
   "name": "reasonable-router",
   "version": "0.0.2",
   "description": "A reasonable (and reasonably simple) router for React",
-  "main": "index.js",
+  "main": "lib/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "pretest": "npm run lint && npm run flow",
     "lint": "eslint components",
-    "flow": "flow"
+    "flow": "flow",
+    "build:lib": "rimraf lib && babel components -d lib"
   },
   "repository": {
     "type": "git",
