@@ -44,7 +44,7 @@ export default App;
 ## Movable Parts
 
 ### `<BrowserRouter>`
-The router to be used in (modern) browsers.
+The router to be used in ([modern](http://caniuse.com/#feat=history)) browsers.
 
 Required props:
 
