@@ -1,6 +1,6 @@
 {
   "name": "reasonable-router",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A reasonable (and reasonably simple) router for React",
   "main": "index.js",
   "scripts": {
@@ -10,7 +10,13 @@
     "type": "git",
     "url": "git+https://github.com/jumoel/reasonable-router.git"
   },
-  "keywords": [ "react", "router", "routing", "route", "routes" ],
+  "keywords": [
+    "react",
+    "router",
+    "routing",
+    "route",
+    "routes"
+  ],
   "author": "Julian Møller <code@jumoel.com>",
   "license": "MIT",
   "bugs": {
