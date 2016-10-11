@@ -13,7 +13,7 @@ type Props = {
 	children?: React$Element<*>,
 };
 
-export class ServerRouter extends Component {
+export default class ServerRouter extends Component {
 	props: Props;
 
 	state: {
