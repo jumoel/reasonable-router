@@ -1,0 +1,10 @@
+[ignore]
+<PROJECT_ROOT>/node_modules/fbjs/.+\.js
+
+[include]
+<PROJECT_ROOT>/src/.+\.js
+<PROJECT_ROOT>/src/.+?/.+\.js
+
+[libs]
+
+[options]
