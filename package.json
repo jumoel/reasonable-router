@@ -10,10 +10,7 @@
     "type": "git",
     "url": "git+https://github.com/jumoel/reasonable-router.git"
   },
-  "keywords": [
-    "react",
-    "router"
-  ],
+  "keywords": [ "react", "router", "routing", "route", "routes" ],
   "author": "Julian Møller <code@jumoel.com>",
   "license": "MIT",
   "bugs": {
