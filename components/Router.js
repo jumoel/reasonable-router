@@ -9,6 +9,7 @@ export type $History = Object;
 type $Props = {
 	history: $History,
 	onChange?: (location: $Location) => void,
+	onMiss?: () => void,
 	routes: $Routes,
 	miss: ReactClass<*>,
 	children?: React$Element<*>,
@@ -67,7 +68,12 @@ export default class Router extends Component {
 		const { routes, miss } = this.props;
 		const { pathname } = this.state.currentLocation;
 
-		this.renderComponent = routes.hasOwnProperty(pathname) ? routes[pathname].component : miss;
+		const routeFound = routes.hasOwnProperty(pathname);
+		if (!routeFound && this.props.onMiss) {
+			this.props.onMiss();
+		}
+
+		this.renderComponent = routeFound ? routes[pathname].component : miss;
 
 		return React.Children.only(this.props.children);
 	}

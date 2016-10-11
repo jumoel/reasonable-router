@@ -11,6 +11,7 @@ type Props = {
 	routes: $Routes,
 	miss: ReactClass<*>,
 	children?: React$Element<*>,
+	onMiss: () => void,
 };
 
 export default class ServerRouter extends Component {
@@ -31,6 +32,14 @@ export default class ServerRouter extends Component {
 	render() {
 		const { routes, miss, children } = this.props;
 
-		return <Router routes={routes} miss={miss} history={this.state.history} children={children} />;
+		return (
+			<Router
+				routes={routes}
+				miss={miss}
+				history={this.state.history}
+				children={children}
+				onMiss={this.props.onMiss}
+			/>
+		);
 	}
 }
