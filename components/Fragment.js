@@ -30,7 +30,7 @@ const Fragment = (props: $Props, context: $Context) => {
 		children.$$typeof && children.$$typeof === Symbol.for('react.element');
 
 	const childrenWithParams = childrenIsReactElement
-		? React.cloneElement(children, { route: routeMatches })
+		? React.cloneElement(children, { routeParams: routeMatches.routeParams } )
 		: children;
 
 	return React.Children.only(childrenWithParams);

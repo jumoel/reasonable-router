@@ -2,13 +2,19 @@ import Route from 'route-parser';
 
 import type { $FormattedRoutes } from './formatRoutes';
 
-const matchRoute = (routes: $FormattedRoutes, pathname: string): boolean | Object => {
+type $MatchedRoute = {
+	route: Object,
+	routeParams: Object,
+	component: ReactClass<*>,
+};
+
+const matchRoute = (routes: $FormattedRoutes, pathname: string): boolean | $MatchedRoute => {
 	const foundRoute = routes.find(({ route }) => {
 		return route.match(pathname);
 	});
 
 	return foundRoute
-		? Object.assign({}, foundRoute, { params: foundRoute.route.match(pathname) })
+		? Object.assign({}, foundRoute, { routeParams: foundRoute.route.match(pathname) })
 		: false;
 };
 
@@ -18,5 +24,5 @@ export const matchSingleRoute = (route: string, pathname: string): boolean | Obj
 	const routeMatcher = new Route(route);
 	const matched = routeMatcher.match(pathname);
 
-	return matched ? { params: matched } : false;
+	return matched ? { routeParams: matched } : false;
 };
