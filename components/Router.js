@@ -25,19 +25,26 @@ type $State = {
 	currentLocation: $Location,
 };
 
+type $RouterRenderProps = {
+	params: Object,
+	Component: null | ReactClass<*>,
+}
+
 export default class Router extends Component {
 	props: $Props;
 
 	state: $State;
 
 	_historyUnlistener: () => void;
-	renderComponent: null | ReactClass<*>;
+	mountPointComponent: null | ReactClass<*>;
+	mountPointParams: Object;
 
 	constructor(props: $Props) {
 		super(props);
 
 		this._historyUnlistener = props.history.listen(this.historyListener.bind(this));
-		this.renderComponent = null;
+		this.mountPointComponent = null;
+		this.mountPointParams = {};
 
 		this.state = {
 			routes: formatRoutes(props.routes),
@@ -47,14 +54,21 @@ export default class Router extends Component {
 
 	static childContextTypes = {
 		push: React.PropTypes.func,
-		getRouterRenderComponent: React.PropTypes.func,
+		getRouterRenderProperties: React.PropTypes.func,
 		getCurrentLocation: React.PropTypes.func,
+	}
+
+	getRouterRenderProperties(): $RouterRenderProps {
+		return {
+			params: this.mountPointParams,
+			Component: this.mountPointComponent,
+		};
 	}
 
 	getChildContext() {
 		return {
 			push: (path: string, state: Object = {}): void => this.props.history.push(path, state),
-			getRouterRenderComponent: (): null | ReactClass<*> => this.renderComponent,
+			getRouterRenderProperties: this.getRouterRenderProperties.bind(this),
 			getCurrentLocation: () => this.state.currentLocation,
 		};
 	}
@@ -83,7 +97,8 @@ export default class Router extends Component {
 
 		const foundRoute = matchRoute(this.state.routes, pathname);
 
-		this.renderComponent = foundRoute ? foundRoute.component : miss;
+		this.mountPointComponent = foundRoute ? foundRoute.component : miss;
+		this.mountPointParams = foundRoute ? foundRoute.params : {};
 
 		if (!foundRoute && this.props.onMiss) {
 			this.props.onMiss();

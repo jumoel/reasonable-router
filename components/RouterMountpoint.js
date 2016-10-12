@@ -4,12 +4,12 @@ import React, { Component } from 'react';
 
 export default class RouterMountpoint extends Component {
 	static contextTypes = {
-		getRouterRenderComponent: React.PropTypes.func,
+		getRouterRenderProperties: React.PropTypes.func,
 	};
 
 	render() {
-		const Component = this.context.getRouterRenderComponent();
+		const { params, Component } = this.context.getRouterRenderProperties();
 
-		return <Component />;
+		return <Component {...params} />;
 	}
 }
