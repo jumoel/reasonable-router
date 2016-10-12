@@ -2,6 +2,11 @@
 
 import React, { Component } from 'react';
 
+import formatRoutes from './formatRoutes';
+import matchRoute from './matchRoute';
+
+import type { $FormattedRoutes } from './formatRoutes';
+
 export type $Routes = { [key: string]: { component: ReactClass<*> }};
 export type $Location = Object;
 export type $History = Object;
@@ -15,15 +20,18 @@ type $Props = {
 	children?: React$Element<*>,
 };
 
+type $State = {
+	routes: $FormattedRoutes,
+	currentLocation: $Location,
+};
+
 export default class Router extends Component {
 	props: $Props;
 
-	state: {
-		currentLocation: $Location,
-	};
+	state: $State;
 
 	_historyUnlistener: () => void;
-	renderComponent: ?ReactClass<*>;
+	renderComponent: null | ReactClass<*>;
 
 	constructor(props: $Props) {
 		super(props);
@@ -32,6 +40,7 @@ export default class Router extends Component {
 		this.renderComponent = null;
 
 		this.state = {
+			routes: formatRoutes(props.routes),
 			currentLocation: props.history.location,
 		};
 	}
@@ -39,14 +48,14 @@ export default class Router extends Component {
 	static childContextTypes = {
 		push: React.PropTypes.func,
 		getRouterRenderComponent: React.PropTypes.func,
-		getLocation: React.PropTypes.func,
+		getCurrentLocation: React.PropTypes.func,
 	}
 
 	getChildContext() {
 		return {
-			push: (path: string, state: Object = {}) => this.props.history.push(path, state),
-			getRouterRenderComponent: () => this.renderComponent,
-			getLocation: () => this.props.history.location,
+			push: (path: string, state: Object = {}): void => this.props.history.push(path, state),
+			getRouterRenderComponent: (): null | ReactClass<*> => this.renderComponent,
+			getCurrentLocation: () => this.state.currentLocation,
 		};
 	}
 
@@ -58,6 +67,10 @@ export default class Router extends Component {
 		this.setState({ currentLocation: location });
 	}
 
+	componentWillReceiveProps(nextProps: $Props) {
+		this.setState({ routes: formatRoutes(nextProps.routes) });
+	}
+
 	componentWillUnmount() {
 		if (this._historyUnlistener) {
 			this._historyUnlistener();
@@ -65,15 +78,16 @@ export default class Router extends Component {
 	}
 
 	render() {
-		const { routes, miss } = this.props;
+		const { miss } = this.props;
 		const { pathname } = this.state.currentLocation;
 
-		const routeFound = routes.hasOwnProperty(pathname);
-		if (!routeFound && this.props.onMiss) {
+		const foundRoute = matchRoute(this.state.routes, pathname);
+
+		this.renderComponent = foundRoute ? foundRoute.component : miss;
+
+		if (!foundRoute && this.props.onMiss) {
 			this.props.onMiss();
 		}
-
-		this.renderComponent = routeFound ? routes[pathname].component : miss;
 
 		return React.Children.only(this.props.children);
 	}

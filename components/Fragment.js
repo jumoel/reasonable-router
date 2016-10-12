@@ -1,28 +1,42 @@
 // @flow
 
-import React from 'react';
+import React, { PropTypes } from 'react';
+import { matchSingleRoute } from './matchRoute';
 
 import type { $Location } from './Router';
 
 type $Props = {
 	forRoute: string,
-	children?: React$Element<*>,
+	children: React$Element<*>,
 }
 
 type $Context = {
-	getLocation: () => $Location,
+	getCurrentLocation: () => $Location,
 }
 
 const Fragment = (props: $Props, context: $Context) => {
-	const location = context.getLocation();
+	const { getCurrentLocation } = context;
 	const { forRoute, children } = props;
 
-	if (location.pathname !== forRoute) {
+	const routeMatches = matchSingleRoute(forRoute, getCurrentLocation().pathname);
+
+	if (!routeMatches) {
 		return null;
 	}
 
-	return React.Children.only(children);
+	const childrenIsReactElement =
+		children &&
+		children.type && typeof children.type === 'function' &&
+		children.$$typeof && children.$$typeof === Symbol.for('react.element');
+
+	const childrenWithParams = childrenIsReactElement
+		? React.cloneElement(children, { route: routeMatches })
+		: children;
+
+	return React.Children.only(childrenWithParams);
 };
-Fragment.contextTypes = { getLocation: React.PropTypes.func };
+Fragment.contextTypes = {
+	getCurrentLocation: PropTypes.func,
+};
 
 export default Fragment;
