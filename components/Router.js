@@ -92,7 +92,7 @@ export default class Router extends Component {
 	}
 
 	render() {
-		const { miss } = this.props;
+		const { miss, children, onMiss } = this.props;
 		const { pathname } = this.state.currentLocation;
 
 		const foundRoute = matchRoute(this.state.routes, pathname);
@@ -100,10 +100,10 @@ export default class Router extends Component {
 		this.mountPointComponent = foundRoute ? foundRoute.component : miss;
 		this.mountPointParams = foundRoute ? foundRoute.routeParams : {};
 
-		if (!foundRoute && this.props.onMiss) {
-			this.props.onMiss();
+		if (!foundRoute && onMiss) {
+			onMiss();
 		}
 
-		return React.Children.only(this.props.children);
+		return React.Children.only(children);
 	}
 }

@@ -8,7 +8,7 @@ type $MatchedRoute = {
 	component: ReactClass<*>,
 };
 
-const matchRoute = (routes: $FormattedRoutes, pathname: string): boolean | $MatchedRoute => {
+const matchRoute = (routes: $FormattedRoutes, pathname: string): false | $MatchedRoute => {
 	const foundRoute = routes.find(({ route }) => {
 		return route.match(pathname);
 	});
