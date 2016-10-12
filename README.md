@@ -2,6 +2,13 @@
 
 A reasonable (and reasonably simple) router for React.
 
+`resonable-router` is pretty old-fashioned, because it is built upon the idea
+that a single URL corresponds to a specific view. This works well with server rendering,
+where that statement holds true. If you don't need server rendering and you are feeling modern,
+something like [Junctions](https://jamesknelson.github.io/junctions/) might be worth a look.
+
+The route of development is driven by a set of [goals](#goals) and [non-goals](#non-goals). 
+
 ## Installation
 
 With [npm](https://www.npmjs.com/):
@@ -40,6 +47,21 @@ class App extends Component {
 
 export default App;
 ```
+
+### Goals
+ * Reasonably simple to comprehend and understand
+ * Single-pass server side rendering
+ * 404 routes
+ * Hot reloading that just works
+
+### Maybe-Goals
+ * Nested 404-routes
+ * A controlled router (where i.e. Redux manages the router state completely)
+
+### Non-Goals
+ * Component based routing (`<Route ... />`)
+ * Asynchronous routes
+
 
 ## Movable Parts
 
@@ -118,16 +140,11 @@ const routes = {
 };
 ```
 
-## Goals
- * Simple to comprehend and understand
- * Single-pass server side rendering
- * 404 routes
- * Hot reloading that just works
+## Contributions
 
-### Maybe-Goals
- * Nested 404-routes
- * A controlled router (where i.e. Redux manages the router state completely)
+Contributions are very welcome!
 
-### Non-Goals
- * Component based routing (`<Route ... />`)
- * Asynchronous routes
+I feel some parts of the code are in need of refactoring, in particular the parameterized route
+matching and passing of parameters, that is currently taking place in both `<Router>` and `<Fragment>`.
+
+Additionally, testing both needs the chore of setup as well as writing of specifications.
