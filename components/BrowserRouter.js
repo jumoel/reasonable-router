@@ -19,8 +19,8 @@ export default class BrowserRouter extends Component {
 		history: $History,
 	};
 
-	constructor(props: Props) {
-		super(props);
+	constructor() {
+		super(...arguments);
 
 		this.state = {
 			history: createBrowserHistory(),

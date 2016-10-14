@@ -22,7 +22,7 @@ export default class ServerRouter extends Component {
 	};
 
 	constructor(props: Props) {
-		super(props);
+		super(...arguments);
 
 		this.state = {
 			history: createMemoryHistory({ initialEntries: [ props.location ]}),
