@@ -11,7 +11,7 @@ type Props = {
 	routes: $Routes,
 	miss: ReactClass<*>,
 	children?: React$Element<*>,
-	onMiss: () => void,
+	onMiss?: () => void,
 };
 
 export default class ServerRouter extends Component {
