@@ -30,16 +30,10 @@ export default class ServerRouter extends Component {
 	}
 
 	render() {
-		const { routes, miss, children } = this.props;
+		// Extract `location` to prevent it from being passed to <Router>
+		// eslint-disable-next-line no-unused-vars
+		const { location, ...rest } = this.props;
 
-		return (
-			<Router
-				routes={routes}
-				miss={miss}
-				history={this.state.history}
-				children={children}
-				onMiss={this.props.onMiss}
-			/>
-		);
+		return <Router {...rest} history={this.state.history} />;
 	}
 }
