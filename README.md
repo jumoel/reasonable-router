@@ -57,6 +57,7 @@ export default App;
 ### Maybe-Goals
  * Nested 404-routes
  * A controlled router (where i.e. Redux manages the router state completely)
+ * Asynchronous fetching of route components
 
 ### Non-Goals
  * Component based routing (`<Route ... />`)
