@@ -54,6 +54,7 @@ export default class Router extends Component {
 		push: React.PropTypes.func,
 		getRouterRenderProperties: React.PropTypes.func,
 		getCurrentLocation: React.PropTypes.func,
+		getRoutes: React.PropTypes.func,
 	}
 
 	getRouterRenderProperties(): $RouterRenderProps {
@@ -63,11 +64,16 @@ export default class Router extends Component {
 		};
 	}
 
+	getRoutes(): $Routes {
+		return this.props.routeConfig.routes;
+	}
+
 	getChildContext() {
 		return {
 			push: (path: string, state: Object = {}): void => this.props.history.push(path, state),
 			getRouterRenderProperties: this.getRouterRenderProperties.bind(this),
 			getCurrentLocation: () => this.state.currentLocation,
+			getRoutes: this.getRoutes.bind(this),
 		};
 	}
 
