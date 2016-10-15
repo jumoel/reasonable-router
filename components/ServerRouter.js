@@ -4,15 +4,14 @@ import React, { Component } from 'react';
 import { createMemoryHistory } from 'history';
 
 import Router from './Router';
-import type { $Routes, $History } from './Router';
+import type { $RouteConfig, $History } from './Router';
 
-type Props = {
+type Props = {|
 	location: String,
-	routes: $Routes,
-	miss: ReactClass<*>,
+	routeConfig: $RouteConfig,
 	children?: React$Element<*>,
 	onMiss?: () => void,
-};
+|};
 
 export default class ServerRouter extends Component {
 	props: Props;

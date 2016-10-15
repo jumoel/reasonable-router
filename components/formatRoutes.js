@@ -5,7 +5,7 @@ export type $FormattedRoutes = [
 	{ route: $RouteParser, component: ReactClass }
 ];
 
-const formatRoutes = (routes): $FormattedRoutes => {
+const formatRoutes = (routes: $RouteConfig): $FormattedRoutes => {
 	return Object.keys(routes).map(key => {
 		const route = routes[key];
 		return { route: new Route(key), component: route.component };

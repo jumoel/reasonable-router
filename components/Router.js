@@ -2,26 +2,25 @@
 
 import React, { Component } from 'react';
 
-import formatRoutes from './formatRoutes';
 import matchRoute from './matchRoute';
 
-import type { $FormattedRoutes } from './formatRoutes';
-
 export type $Routes = { [key: string]: { component: ReactClass<*> }};
+export type $RouteConfig = {|
+	miss: ReactClass<*>,
+	routes: $Routes,
+|};
 export type $Location = Object;
 export type $History = Object;
 
-type $Props = {
+type Props = {
 	history: $History,
 	onChange?: (location: $Location) => void,
 	onMiss?: () => void,
-	routes: $Routes,
-	miss: ReactClass<*>,
+	routeConfig: $RouteConfig,
 	children?: React$Element<*>,
 };
 
-type $State = {
-	routes: $FormattedRoutes,
+type State = {
 	currentLocation: $Location,
 };
 
@@ -31,23 +30,22 @@ type $RouterRenderProps = {
 }
 
 export default class Router extends Component {
-	props: $Props;
+	props: Props;
 
-	state: $State;
+	state: State;
 
 	_historyUnlistener: () => void;
 	mountPointComponent: null | ReactClass<*>;
 	mountPointParams: Object;
 
-	constructor(props: $Props) {
-		super(props);
+	constructor(props: Props) {
+		super(...arguments);
 
 		this._historyUnlistener = props.history.listen(this.historyListener.bind(this));
 		this.mountPointComponent = null;
 		this.mountPointParams = {};
 
 		this.state = {
-			routes: formatRoutes(props.routes),
 			currentLocation: props.history.location,
 		};
 	}
@@ -81,10 +79,6 @@ export default class Router extends Component {
 		this.setState({ currentLocation: location });
 	}
 
-	componentWillReceiveProps(nextProps: $Props) {
-		this.setState({ routes: formatRoutes(nextProps.routes) });
-	}
-
 	componentWillUnmount() {
 		if (this._historyUnlistener) {
 			this._historyUnlistener();
@@ -92,15 +86,15 @@ export default class Router extends Component {
 	}
 
 	render() {
-		const { miss, children, onMiss } = this.props;
+		const { children, onMiss, routeConfig } = this.props;
 		const { pathname } = this.state.currentLocation;
 
-		const foundRoute = matchRoute(this.state.routes, pathname);
+		const foundRoute = matchRoute(routeConfig, pathname);
 
-		this.mountPointComponent = foundRoute ? foundRoute.component : miss;
-		this.mountPointParams = foundRoute ? foundRoute.routeParams : {};
+		this.mountPointComponent = foundRoute.component;
+		this.mountPointParams = foundRoute.routeParams;
 
-		if (!foundRoute && onMiss) {
+		if (foundRoute.isMiss && onMiss) {
 			onMiss();
 		}
 

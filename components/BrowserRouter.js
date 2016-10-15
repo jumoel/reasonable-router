@@ -4,11 +4,10 @@ import React, { Component } from 'react';
 import { createBrowserHistory } from 'history';
 
 import Router from './Router';
-import type { $Routes, $History } from './Router';
+import type { $RouteConfig, $History } from './Router';
 
 type Props = {
-	routes: $Routes,
-	miss: ReactClass<*>,
+	routeConfig: $RouteConfig,
 	children?: React$Element<*>,
 };
 

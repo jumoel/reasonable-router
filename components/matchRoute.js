@@ -1,21 +1,25 @@
 import Route from 'route-parser';
+import formatRoutes from './formatRoutes';
 
-import type { $FormattedRoutes } from './formatRoutes';
+import type { $RouteConfig } from './Router';
 
-type $MatchedRoute = {
-	route: Object,
+type $MatchedRoute = {|
+	route?: Object,
 	routeParams: Object,
 	component: ReactClass<*>,
-};
+	isMiss?: boolean,
+|};
 
-const matchRoute = (routes: $FormattedRoutes, pathname: string): false | $MatchedRoute => {
-	const foundRoute = routes.find(({ route }) => {
+const matchRoute = (routeConfig: $RouteConfig, pathname: string): $MatchedRoute => {
+	const formattedRoutes = formatRoutes(routeConfig.routes);
+
+	const foundRoute = formattedRoutes.find(({ route }) => {
 		return route.match(pathname);
 	});
 
 	return foundRoute
 		? Object.assign({}, foundRoute, { routeParams: foundRoute.route.match(pathname) })
-		: false;
+		: { component: routeConfig.miss, routeParams: {}, isMiss: true };
 };
 
 export default matchRoute;
