@@ -8,3 +8,4 @@ components
 .eslintrc.js
 jsconfig.json
 npm-debug.log
+yarn.lock
