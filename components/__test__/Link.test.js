@@ -31,4 +31,24 @@ describe('Link', () => {
 		expect(link.prop('href')).toEqual('/');
 		expect(link.text()).toEqual('Linktext');
 	});
+
+	it('warns when `href` prop is invalid', () => {
+		console.warn = jest.fn();
+
+		shallow(<Link href=''>Linktext</Link>);
+
+		expect(console.warn).toBeCalled();
+	});
+
+	it('warns when `to` prop is invalid', () => {
+		console.warn = jest.fn();
+		const getRoutes = () => ({});
+
+		shallow(
+			<Link to='NotFound'>Linktext</Link>,
+			{ context: { getRoutes } }
+		);
+
+		expect(console.warn).toBeCalled();
+	});
 });
