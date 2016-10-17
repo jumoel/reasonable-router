@@ -31,8 +31,17 @@ export default class Link extends Component {
 	render() {
 		const { to, children } = this.props;
 		const { push } = this.context;
+		const NODE_ENV = process && process.env && process.env.NODE_ENV ? process.env.NODE_ENV : 'production';
 
 		const href = to ? this.routeFromName(to) : this.props.href;
+
+		if (NODE_ENV !== 'production') {
+			if (!href) {
+				// Won't print in production, so console is fine
+				// eslint-disable-next-line no-console
+				console.warn('Invalid target for <Link>', { to: this.props.to, href: this.props.href });
+			}
+		}
 
 		return <a href={href} onClick={(e) => { e.preventDefault(); push(href); }} children={children} />;
 	}
