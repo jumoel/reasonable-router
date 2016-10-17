@@ -5,3 +5,4 @@ export { default as ServerRouter } from './ServerRouter';
 export { default as RouterMountpoint } from './RouterMountpoint';
 export { default as Fragment } from './Fragment';
 export { default as Link } from './Link';
+export { default as matchRoute } from './matchRoute';
