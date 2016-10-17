@@ -1,16 +1,22 @@
 // @flow
 import React, { Component, PropTypes } from 'react';
 
-export default class Link extends Component {
-	props: {|
-		href: string,
-		children?: React$Element<*>
-	|} | {|
-		to: string,
-		children?: React$Element<*>,
-	|};
+type HrefProps = {|
+	to: null,
+	href: string,
+	children?: React$Element<*>
+|};
 
-	routeFromName(to: string): string {
+type ToProps = {|
+	to: string,
+	href: null,
+	children?: React$Element<*>,
+|};
+
+export default class Link extends Component {
+	props: HrefProps | ToProps;
+
+	routeFromName(to: string): ?string {
 		const routes = this.context.getRoutes();
 		return Object.keys(routes).find(routeKey => (
 			routes[routeKey].name && routes[routeKey].name === to
