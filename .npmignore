@@ -9,3 +9,5 @@ components
 jsconfig.json
 npm-debug.log
 yarn.lock
+.DS_Store
+__test__
