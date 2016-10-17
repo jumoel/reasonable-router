@@ -98,7 +98,7 @@ export default class Router extends Component {
 		const foundRoute = matchRoute(routeConfig, pathname);
 
 		this.mountPointComponent = foundRoute.component;
-		this.mountPointParams = foundRoute.routeParams;
+		this.mountPointParams = foundRoute.params;
 
 		if (foundRoute.isMiss && onMiss) {
 			onMiss();

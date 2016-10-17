@@ -18,9 +18,9 @@ const Fragment = (props: $Props, context: $Context) => {
 	const { getCurrentLocation } = context;
 	const { forRoute, children } = props;
 
-	const routeMatches = matchSingleRoute(forRoute, getCurrentLocation().pathname);
+	const route = matchSingleRoute(forRoute, getCurrentLocation().pathname);
 
-	if (!routeMatches) {
+	if (!route) {
 		return null;
 	}
 
@@ -30,7 +30,7 @@ const Fragment = (props: $Props, context: $Context) => {
 		children.$$typeof && children.$$typeof === Symbol.for('react.element');
 
 	const childrenWithParams = childrenIsReactElement
-		? React.cloneElement(children, { routeParams: routeMatches.routeParams } )
+		? React.cloneElement(children, { params: route.params } )
 		: children;
 
 	return React.Children.only(childrenWithParams);

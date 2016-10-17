@@ -4,9 +4,9 @@ import formatRoutes from './formatRoutes';
 import type { $RouteConfig } from './Router';
 
 type $MatchedRoute = {|
-	route?: Object,
-	routeParams: Object,
+	params: Object,
 	component: ReactClass<*>,
+	route?: Object,
 	isMiss?: boolean,
 |};
 
@@ -18,8 +18,8 @@ const matchRoute = (routeConfig: $RouteConfig, pathname: string): $MatchedRoute 
 	});
 
 	return foundRoute
-		? Object.assign({}, foundRoute, { routeParams: foundRoute.route.match(pathname) })
-		: { component: routeConfig.miss, routeParams: {}, isMiss: true };
+		? Object.assign({}, foundRoute, { params: foundRoute.route.match(pathname) })
+		: { component: routeConfig.miss, params: {}, isMiss: true };
 };
 
 export default matchRoute;
@@ -28,5 +28,5 @@ export const matchSingleRoute = (route: string, pathname: string): boolean | Obj
 	const routeMatcher = new Route(route);
 	const matched = routeMatcher.match(pathname);
 
-	return matched ? { routeParams: matched } : false;
+	return matched ? { params: matched } : false;
 };
