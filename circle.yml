@@ -17,4 +17,4 @@ test:
     - yarn run lint
     - yarn run flow
   override:
-    - yarn run test
+    - yarn run test:ci
