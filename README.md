@@ -1,5 +1,7 @@
 # Reasonable Router
 
+[![CircleCI](https://circleci.com/gh/jumoel/reasonable-router.svg?style=shield)](https://circleci.com/gh/jumoel/reasonable-router)
+
 A reasonable (and reasonably simple) router for React.
 
 `resonable-router` is pretty old-fashioned, because it is built upon the idea
