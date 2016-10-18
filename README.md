@@ -162,7 +162,7 @@ const routeConfig = {
 	routes: {
 		'/': { component: () => <h1>Frontpage</h1>) },
 		'/about': { component: About },
-		'/hello/:name': { component: ({ routeParams }) => <h1>Hello, { routeParams.name }</h1> }
+		'/hello/:name': { component: ({ params }) => <h1>Hello, { params.name }</h1> }
 	},
 	miss: () => <h1>Not found</h1>,
 };
