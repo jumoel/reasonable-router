@@ -4,7 +4,8 @@ import React, { Component } from 'react';
 
 import matchRoute from './matchRoute';
 
-export type $Routes = { [key: string]: { component: ReactClass<*> }};
+export type $Route = {| component: ReactClass<*>, name?: string |};
+export type $Routes = { [key: string]: $Route };
 export type $RouteConfig = {|
 	miss: ReactClass<*>,
 	routes: $Routes,
