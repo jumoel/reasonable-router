@@ -17,7 +17,7 @@ describe('Link', () => {
 			<Link href='/'>Linktext</Link>
 		);
 
-		expect(link.find({ href: '/' }).length).toEqual(1);
+		expect(link.prop('href')).toEqual('/');
 	});
 
 	it('renders with a named route', () => {
