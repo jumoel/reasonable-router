@@ -24,9 +24,9 @@ const matchRoute = (routeConfig: $RouteConfig, pathname: string): $MatchedRoute 
 
 export default matchRoute;
 
-export const matchSingleRoute = (route: string, pathname: string): boolean | Object => {
+export const matchSingleRoute = (route: string, pathname: string): boolean | {| params: Object |} => {
 	const routeMatcher = new Route(route);
-	const matched = routeMatcher.match(pathname);
+	const matched: Object = routeMatcher.match(pathname);
 
 	return matched ? { params: matched } : false;
 };
