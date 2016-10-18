@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 
 import Link from '../Link';
 
-describe('Link', () => {
+describe('<Link />', () => {
 	it('renders with the proper text', () => {
 		const link = shallow(
 			<Link href='/'>Linktext</Link>
