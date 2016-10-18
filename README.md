@@ -72,7 +72,7 @@ export default App;
 
 ## Movable Parts
 
-### `<BrowserRouter>`]
+### `<BrowserRouter>`
 
 The router to be used in ([modern](http://caniuse.com/#feat=history)) browsers.
 
