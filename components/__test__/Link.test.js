@@ -51,4 +51,8 @@ describe('<Link />', () => {
 
 		expect(console.warn).toBeCalled();
 	});
+
+	it('navigates properly with the context method', () => {
+		expect(false).toBeTruthy();
+	});
 });
