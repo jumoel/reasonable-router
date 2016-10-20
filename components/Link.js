@@ -43,6 +43,12 @@ export default class Link extends Component {
 			}
 		}
 
-		return <a href={href} onClick={(e) => { e.preventDefault(); push(href); }} children={children} />;
+		return (
+			<a
+				href={href}
+				onClick={(e) => { e.preventDefault(); push(href); }}
+				children={children}
+			/>
+		);
 	}
 }

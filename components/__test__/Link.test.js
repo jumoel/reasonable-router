@@ -53,6 +53,19 @@ describe('<Link />', () => {
 	});
 
 	it('navigates properly with the context method', () => {
-		expect(false).toBeTruthy();
+		const push = jest.fn();
+		const event = { preventDefault: jest.fn() };
+
+		const getRoutes = () => ({});
+
+		const link = shallow(
+			<Link to='/'>Linktext</Link>,
+			{ context: { push, getRoutes } }
+		);
+
+		link.simulate('click', event);
+
+		expect(event.preventDefault).toBeCalled();
+		expect(push).toBeCalled();
 	});
 });
