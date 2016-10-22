@@ -4,10 +4,11 @@
   "description": "A reasonable (and reasonably simple) router for React",
   "main": "lib/index.js",
   "scripts": {
-    "lint": "eslint components",
+    "lint": "eslint .",
     "flow": "flow",
     "test": "jest",
     "test:ci": "jest --coverage && cat ./coverage/lcov.info | coveralls",
+    "test:watch": "jest --watch --notify",
     "test:all": "npm run lint && npm run flow && npm run test",
     "build:lib": "babel components -d lib",
     "prepublish": "in-publish && (rimraf lib && npm run test:all && npm run build:lib) || exit 0"

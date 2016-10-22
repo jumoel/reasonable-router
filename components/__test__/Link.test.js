@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 
 import Link from '../Link';
 
-describe('Link', () => {
+describe('<Link />', () => {
 	it('renders with the proper text', () => {
 		const link = shallow(
 			<Link href='/'>Linktext</Link>
@@ -50,5 +50,22 @@ describe('Link', () => {
 		);
 
 		expect(console.warn).toBeCalled();
+	});
+
+	it('navigates properly with the context method', () => {
+		const push = jest.fn();
+		const event = { preventDefault: jest.fn() };
+
+		const getRoutes = () => ({});
+
+		const link = shallow(
+			<Link to='/'>Linktext</Link>,
+			{ context: { push, getRoutes } }
+		);
+
+		link.simulate('click', event);
+
+		expect(event.preventDefault).toBeCalled();
+		expect(push).toBeCalled();
 	});
 });

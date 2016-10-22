@@ -4,7 +4,8 @@ import React, { Component } from 'react';
 
 import matchRoute from './matchRoute';
 
-export type $Routes = { [key: string]: { component: ReactClass<*> }};
+export type $Route = {| component: ReactClass<*>, name?: string |};
+export type $Routes = { [key: string]: $Route };
 export type $RouteConfig = {|
 	miss: ReactClass<*>,
 	routes: $Routes,
@@ -82,7 +83,9 @@ export default class Router extends Component {
 			this.props.onChange(location);
 		}
 
-		this.setState({ currentLocation: location });
+		if (process.env.BROWSER) {
+			this.setState({ currentLocation: location });
+		}
 	}
 
 	componentWillUnmount() {
@@ -102,6 +105,10 @@ export default class Router extends Component {
 
 		if (foundRoute.isMiss && onMiss) {
 			onMiss();
+		}
+
+		if (!children) {
+			return null;
 		}
 
 		return React.Children.only(children);
