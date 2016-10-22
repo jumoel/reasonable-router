@@ -1,26 +1,40 @@
 // @flow
 import React, { Component, PropTypes } from 'react';
 
+import { formatRoute } from './formatRoutes';
+
+import type { $Routes } from './Router';
+
 type HrefProps = {|
 	to: null,
 	href: string,
+	params: null,
 	children?: React$Element<*>
 |};
 
 type ToProps = {|
 	to: string,
 	href: null,
+	params: Object,
 	children?: React$Element<*>,
 |};
 
 export default class Link extends Component {
 	props: HrefProps | ToProps;
 
-	routeFromName(to: string): ?string {
-		const routes = this.context.getRoutes();
-		return Object.keys(routes).find(routeKey => (
+	routeFromName(to: string, params: ?Object): ?string {
+		const routes: $Routes = this.context.getRoutes();
+		const routeKey = Object.keys(routes).find(routeKey => (
 			routes[routeKey].name && routes[routeKey].name === to
 		));
+
+		if (!routeKey) {
+			return undefined;
+		}
+
+		const matched = formatRoute(routeKey, routes[routeKey]);
+
+		return matched.route.reverse(params || {});
 	}
 
 	static contextTypes = {
@@ -29,11 +43,11 @@ export default class Link extends Component {
 	};
 
 	render() {
-		const { to, children } = this.props;
+		const { to, params, children } = this.props;
 		const { push } = this.context;
 		const NODE_ENV = process && process.env && process.env.NODE_ENV ? process.env.NODE_ENV : 'production';
 
-		const href = to ? this.routeFromName(to) : this.props.href;
+		const href = to ? this.routeFromName(to, params) : this.props.href;
 
 		if (NODE_ENV !== 'production') {
 			if (!href) {
