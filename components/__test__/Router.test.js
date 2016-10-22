@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from 'enzyme';
+import { render, shallow } from 'enzyme';
 
 import { createMemoryHistory } from 'history';
 
@@ -83,5 +83,53 @@ describe('<Router />', () => {
 
 		hist.push('/');
 		expect(onChange).toBeCalled();
+	});
+
+	it('supplies the proper location in context', () => {
+		const hist = history('/another-page');
+
+		const wrapper = shallow(
+			<Router routeConfig={routeConfig} history={hist} />
+		);
+
+		const { currentLocation } = wrapper.state();
+		const childContext = wrapper.instance().getChildContext();
+
+		const expectedLocation = {
+			hash: '',
+			key: undefined,
+			pathname: '/another-page',
+			search: '',
+			state: undefined,
+		};
+
+		expect(currentLocation).toEqual(expectedLocation);
+		expect(childContext.getCurrentLocation()).toEqual(expectedLocation);
+	});
+
+	it('supplies the proper routes in context', () => {
+		const hist = history('/another-page');
+
+		const wrapper = shallow(
+			<Router routeConfig={routeConfig} history={hist} />
+		);
+
+		const childContext = wrapper.instance().getChildContext();
+
+		expect(childContext.getRoutes()).toEqual(routeConfig.routes);
+	});
+
+	it('supplies the proper push function in context', () => {
+		const hist = history('/another-page');
+
+		const wrapper = shallow(
+			<Router routeConfig={routeConfig} history={hist} />
+		);
+
+		const { push } = wrapper.instance().getChildContext();
+		push('/a-new-page');
+
+		expect(typeof push).toEqual('function');
+		expect(hist.location.pathname).toEqual('/a-new-page');
 	});
 });

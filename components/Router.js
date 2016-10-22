@@ -107,6 +107,10 @@ export default class Router extends Component {
 			onMiss();
 		}
 
+		if (!children) {
+			return null;
+		}
+
 		return React.Children.only(children);
 	}
 }
