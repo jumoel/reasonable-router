@@ -1,5 +1,7 @@
 # Reasonable Router
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/jumoel/reasonable-router.svg)](https://greenkeeper.io/)
+
 [![CircleCI](https://circleci.com/gh/jumoel/reasonable-router.svg?style=shield)](https://circleci.com/gh/jumoel/reasonable-router)
 [![Coverage Status](https://coveralls.io/repos/github/jumoel/reasonable-router/badge.svg?branch=master)](https://coveralls.io/github/jumoel/reasonable-router?branch=master)
 ![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)
