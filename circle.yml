@@ -16,3 +16,9 @@ test:
     - yarn run flow
   override:
     - yarn run test:ci
+
+deployment:
+  greenkeeper:
+    branch: /greenkeeper\/.+/
+    commands:
+      - ./scripts/update_yarnlock.sh
