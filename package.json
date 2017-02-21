@@ -11,7 +11,8 @@
     "test:watch": "jest --watch --notify",
     "test:all": "npm run lint && npm run flow && npm run test",
     "build:lib": "babel components -d lib",
-    "prepublish": "in-publish && (rimraf lib && npm run test:all && npm run build:lib) || exit 0"
+    "prepublish": "in-publish && (rimraf lib && npm run test:all && npm run build:lib) || exit 0",
+    "postpublish": "git push origin --tags"
   },
   "jest": {
     "collectCoverageFrom": [
