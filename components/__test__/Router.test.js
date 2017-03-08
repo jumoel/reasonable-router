@@ -16,7 +16,7 @@ describe('<Router />', () => {
 		miss: NotFound,
 	};
 
-	const history = (page) => createMemoryHistory({ initialEntries: [ page ]});
+	const history = (page) => createMemoryHistory({ initialEntries: [ page ] });
 
 	it('renders a page when the route matches', () => {
 		const result = render(
@@ -97,14 +97,13 @@ describe('<Router />', () => {
 
 		const expectedLocation = {
 			hash: '',
-			key: undefined,
 			pathname: '/another-page',
 			search: '',
 			state: undefined,
 		};
 
-		expect(currentLocation).toEqual(expectedLocation);
-		expect(childContext.getCurrentLocation()).toEqual(expectedLocation);
+		expect(currentLocation).toMatchObject(expectedLocation);
+		expect(childContext.getCurrentLocation()).toMatchObject(expectedLocation);
 	});
 
 	it('supplies the proper routes in context', () => {

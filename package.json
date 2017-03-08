@@ -10,7 +10,7 @@
     "test:ci": "jest --coverage && cat ./coverage/lcov.info | coveralls",
     "test:watch": "jest --watch --notify",
     "test:all": "npm run lint && npm run flow && npm run test",
-    "build:lib": "babel components -d lib",
+    "build:lib": "babel components --out-dir lib --ignore components/__test__",
     "prepublish": "in-publish && (rimraf lib && npm run test:all && npm run build:lib) || exit 0",
     "postpublish": "git push origin --tags"
   },
@@ -38,7 +38,7 @@
   },
   "homepage": "https://github.com/jumoel/reasonable-router#readme",
   "dependencies": {
-    "history": "^4.3.0",
+    "history": "^4.6.0",
     "route-parser": "^0.0.5"
   },
   "devDependencies": {
