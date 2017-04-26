@@ -1,3 +1,5 @@
+// @flow
+
 import Route from 'route-parser';
 import formatRoutes from './formatRoutes';
 

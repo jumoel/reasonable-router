@@ -1,3 +1,5 @@
+// @flow
+
 import Route from 'route-parser';
 
 import type { $Routes, $Route } from './Router';
