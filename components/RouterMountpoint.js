@@ -1,10 +1,11 @@
 // @flow
 
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 export default class RouterMountpoint extends Component {
 	static contextTypes = {
-		getRouterRenderProperties: React.PropTypes.func,
+		getRouterRenderProperties: PropTypes.func,
 	};
 
 	render() {

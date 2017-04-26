@@ -1,6 +1,7 @@
 // @flow
 
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { matchSingleRoute } from './matchRoute';
 
 import type { $Location } from './Router';

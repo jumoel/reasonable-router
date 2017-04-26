@@ -1,6 +1,7 @@
 // @flow
 
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import matchRoute from './matchRoute';
 
@@ -52,10 +53,10 @@ export default class Router extends Component {
 	}
 
 	static childContextTypes = {
-		push: React.PropTypes.func,
-		getRouterRenderProperties: React.PropTypes.func,
-		getCurrentLocation: React.PropTypes.func,
-		getRoutes: React.PropTypes.func,
+		push: PropTypes.func,
+		getRouterRenderProperties: PropTypes.func,
+		getCurrentLocation: PropTypes.func,
+		getRoutes: PropTypes.func,
 	}
 
 	getRouterRenderProperties(): $RouterRenderProps {
