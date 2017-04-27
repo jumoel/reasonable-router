@@ -1,10 +1,6 @@
-// @flow
-
 import React from 'react';
 
 import formatRoutes from '../formatRoutes';
-
-import type { $Routes } from '../Router';
 
 describe('formatRoutes', () => {
 	it('returns an array', () => {
@@ -15,7 +11,7 @@ describe('formatRoutes', () => {
 
 	it('creates a `route` and `component` prop', () => {
 		const Component = () => <h1>Component</h1>;
-		const routes: $Routes = {
+		const routes = {
 			'/': { component: Component },
 		};
 
@@ -28,11 +24,11 @@ describe('formatRoutes', () => {
 
 	it('creates a `name` prop if supplied', () => {
 		const Component = () => <h1>Component</h1>;
-		const routesWithoutName: $Routes = {
+		const routesWithoutName = {
 			'/': { component: Component },
 		};
 
-		const routesWithName: $Routes = {
+		const routesWithName = {
 			'/': { component: Component, name: 'Name' },
 		};
 

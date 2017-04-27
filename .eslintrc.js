@@ -4,13 +4,13 @@ module.exports = {
 	plugins: [
 		'eslint-plugin-babel',
 		'eslint-plugin-react',
-		'eslint-plugin-flowtype',
+		//'eslint-plugin-flowtype',
 	],
 
 	extends: [
 		'eslint:recommended',
 		'plugin:react/recommended',
-		'plugin:flowtype/recommended',
+		//'plugin:flowtype/recommended',
 	],
 
 	rules: {

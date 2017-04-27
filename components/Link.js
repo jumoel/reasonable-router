@@ -1,30 +1,11 @@
-// @flow
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import { formatRoute } from './formatRoutes';
 
-import type { $Routes } from './Router';
-
-type HrefProps = {|
-	to: null,
-	href: string,
-	params: null,
-	children?: React$Element<*>
-|};
-
-type ToProps = {|
-	to: string,
-	href: null,
-	params: Object,
-	children?: React$Element<*>,
-|};
-
 export default class Link extends Component {
-	props: HrefProps | ToProps;
-
-	routeFromName(to: string, params: ?Object): ?string {
-		const routes: $Routes = this.context.getRoutes();
+	routeFromName(to, params) {
+		const routes = this.context.getRoutes();
 		const routeKey = Object.keys(routes).find(routeKey => (
 			routes[routeKey].name && routes[routeKey].name === to
 		));

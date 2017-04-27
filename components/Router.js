@@ -1,46 +1,10 @@
-// @flow
-
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import matchRoute from './matchRoute';
 
-export type $Route = {| component: ReactClass<*>, name?: string |};
-export type $Routes = { [key: string]: $Route };
-export type $RouteConfig = {|
-	miss: ReactClass<*>,
-	routes: $Routes,
-|};
-export type $Location = Object;
-export type $History = Object;
-
-type Props = {
-	history: $History,
-	onChange?: (location: $Location) => void,
-	onMiss?: () => void,
-	routeConfig: $RouteConfig,
-	children?: React$Element<*>,
-};
-
-type State = {
-	currentLocation: $Location,
-};
-
-type $RouterRenderProps = {
-	params: Object,
-	Component: null | ReactClass<*>,
-}
-
 export default class Router extends Component {
-	props: Props;
-
-	state: State;
-
-	_historyUnlistener: () => void;
-	mountPointComponent: null | ReactClass<*>;
-	mountPointParams: Object;
-
-	constructor(props: Props) {
+	constructor(props) {
 		super(...arguments);
 
 		this._historyUnlistener = props.history.listen(this.historyListener.bind(this));
@@ -59,27 +23,27 @@ export default class Router extends Component {
 		getRoutes: PropTypes.func,
 	}
 
-	getRouterRenderProperties(): $RouterRenderProps {
+	getRouterRenderProperties() {
 		return {
 			params: this.mountPointParams,
 			Component: this.mountPointComponent,
 		};
 	}
 
-	getRoutes(): $Routes {
+	getRoutes() {
 		return this.props.routeConfig.routes;
 	}
 
 	getChildContext() {
 		return {
-			push: (path: string, state: Object = {}): void => this.props.history.push(path, state),
+			push: (path, state = {}) => this.props.history.push(path, state),
 			getRouterRenderProperties: this.getRouterRenderProperties.bind(this),
 			getCurrentLocation: () => this.state.currentLocation,
 			getRoutes: this.getRoutes.bind(this),
 		};
 	}
 
-	historyListener(location: $Location) {
+	historyListener(location) {
 		if (this.props.onChange) {
 			this.props.onChange(location);
 		}

@@ -1,26 +1,11 @@
-// @flow
-
 import React, { Component } from 'react';
 import { createMemoryHistory } from 'history';
 
 import Router from './Router';
-import type { $RouteConfig, $History } from './Router';
-
-type Props = {|
-	location: String,
-	routeConfig: $RouteConfig,
-	children?: React$Element<*>,
-	onMiss?: () => void,
-|};
 
 export default class ServerRouter extends Component {
-	props: Props;
 
-	state: {
-		history: $History,
-	};
-
-	constructor(props: Props) {
+	constructor(props) {
 		super(...arguments);
 
 		this.state = {

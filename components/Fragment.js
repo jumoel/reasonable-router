@@ -1,21 +1,9 @@
-// @flow
-
 import React from 'react';
 import PropTypes from 'prop-types';
 import { matchSingleRoute } from './matchRoute';
 
-import type { $Location } from './Router';
 
-type $Props = {
-	forRoute: string,
-	children: React$Element<*>,
-}
-
-type $Context = {
-	getCurrentLocation: () => $Location,
-}
-
-const Fragment = (props: $Props, context: $Context) => {
+const Fragment = (props, context) => {
 	const { getCurrentLocation } = context;
 	const { forRoute, children } = props;
 
