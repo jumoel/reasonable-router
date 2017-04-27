@@ -24,6 +24,7 @@ module.exports = {
 			semi: true,
 		}],
 		'eqeqeq': ['error'],
+		'react/prop-types': ['off'],
 	},
 
 	env: {
