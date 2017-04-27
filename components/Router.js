@@ -50,9 +50,7 @@ export default class Router extends Component {
 			this.props.onChange(location);
 		}
 
-		if (process.env.BROWSER) {
-			this.setState({ currentLocation: location });
-		}
+		this.setState({ currentLocation: location });
 	}
 
 	componentWillUnmount() {
