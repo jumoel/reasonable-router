@@ -7,7 +7,9 @@ export default class Router extends Component {
 	constructor(props) {
 		super(...arguments);
 
-		this._historyUnlistener = props.history.listen(this.historyListener.bind(this));
+		this._historyUnlistener = props.history.listen(
+			this.historyListener.bind(this),
+		);
 		this.mountPointComponent = null;
 		this.mountPointParams = {};
 
@@ -21,7 +23,7 @@ export default class Router extends Component {
 		getRouterRenderProperties: PropTypes.func,
 		getCurrentLocation: PropTypes.func,
 		getRoutes: PropTypes.func,
-	}
+	};
 
 	getRouterRenderProperties() {
 		return {

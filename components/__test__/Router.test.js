@@ -16,13 +16,13 @@ describe('<Router />', () => {
 		miss: NotFound,
 	};
 
-	const history = (page) => createMemoryHistory({ initialEntries: [ page ] });
+	const history = page => createMemoryHistory({ initialEntries: [page] });
 
 	it('renders a page when the route matches', () => {
 		const result = render(
 			<Router routeConfig={routeConfig} history={history('/')}>
 				<RouterMountpoint />
-			</Router>
+			</Router>,
 		);
 
 		expect(result.text()).toEqual('Page');
@@ -32,7 +32,7 @@ describe('<Router />', () => {
 		const result = render(
 			<Router routeConfig={routeConfig} history={history('/another-page')}>
 				<RouterMountpoint />
-			</Router>
+			</Router>,
 		);
 
 		expect(result.text()).toEqual('Not Found');
@@ -42,9 +42,13 @@ describe('<Router />', () => {
 		const onMiss = jest.fn();
 
 		render(
-			<Router routeConfig={routeConfig} history={history('/another-page')} onMiss={onMiss}>
+			<Router
+				routeConfig={routeConfig}
+				history={history('/another-page')}
+				onMiss={onMiss}
+			>
 				<RouterMountpoint />
-			</Router>
+			</Router>,
 		);
 
 		expect(onMiss).toBeCalled();
@@ -56,7 +60,7 @@ describe('<Router />', () => {
 		const before = render(
 			<Router routeConfig={routeConfig} history={hist}>
 				<RouterMountpoint />
-			</Router>
+			</Router>,
 		);
 
 		expect(before.text()).toEqual('Not Found');
@@ -66,7 +70,7 @@ describe('<Router />', () => {
 		const after = render(
 			<Router routeConfig={routeConfig} history={hist}>
 				<RouterMountpoint />
-			</Router>
+			</Router>,
 		);
 		expect(after.text()).toEqual('Page');
 	});
@@ -78,7 +82,7 @@ describe('<Router />', () => {
 		render(
 			<Router routeConfig={routeConfig} history={hist} onChange={onChange}>
 				<RouterMountpoint />
-			</Router>
+			</Router>,
 		);
 
 		hist.push('/');
@@ -89,7 +93,7 @@ describe('<Router />', () => {
 		const hist = history('/another-page');
 
 		const wrapper = shallow(
-			<Router routeConfig={routeConfig} history={hist} />
+			<Router routeConfig={routeConfig} history={hist} />,
 		);
 
 		const { currentLocation } = wrapper.state();
@@ -110,7 +114,7 @@ describe('<Router />', () => {
 		const hist = history('/another-page');
 
 		const wrapper = shallow(
-			<Router routeConfig={routeConfig} history={hist} />
+			<Router routeConfig={routeConfig} history={hist} />,
 		);
 
 		const childContext = wrapper.instance().getChildContext();
@@ -122,7 +126,7 @@ describe('<Router />', () => {
 		const hist = history('/another-page');
 
 		const wrapper = shallow(
-			<Router routeConfig={routeConfig} history={hist} />
+			<Router routeConfig={routeConfig} history={hist} />,
 		);
 
 		const { push } = wrapper.instance().getChildContext();

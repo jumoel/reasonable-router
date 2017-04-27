@@ -55,7 +55,6 @@ describe('matchSingleRoute', () => {
 	});
 
 	it('does not match a not-matching route', () => {
-
 		const result = matchSingleRoute(pageRoute, '/another-page');
 
 		expect(result).toEqual(false);

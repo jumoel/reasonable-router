@@ -4,12 +4,11 @@ import { createMemoryHistory } from 'history';
 import Router from './Router';
 
 export default class ServerRouter extends Component {
-
 	constructor(props) {
 		super(...arguments);
 
 		this.state = {
-			history: createMemoryHistory({ initialEntries: [ props.location ]}),
+			history: createMemoryHistory({ initialEntries: [props.location] }),
 		};
 	}
 

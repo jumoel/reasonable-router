@@ -16,25 +16,33 @@ describe('<ServerRouter />', () => {
 	const location = '/?search#hash';
 
 	it('renders a <Route /> component', () => {
-		const result = shallow(<ServerRouter location={location} routeConfig={routeConfig} />);
+		const result = shallow(
+			<ServerRouter location={location} routeConfig={routeConfig} />,
+		);
 
 		expect(result.type()).toEqual(Router);
 	});
 
 	it('passes along the routeConfig object', () => {
-		const result = shallow(<ServerRouter location={location} routeConfig={routeConfig} />);
+		const result = shallow(
+			<ServerRouter location={location} routeConfig={routeConfig} />,
+		);
 
 		expect(result.node.props.routeConfig).toEqual(routeConfig);
 	});
 
 	it('does not pass on the location property', () => {
-		const result = shallow(<ServerRouter location={location} routeConfig={routeConfig} />);
+		const result = shallow(
+			<ServerRouter location={location} routeConfig={routeConfig} />,
+		);
 
 		expect(result.node.props.location).toBeUndefined();
 	});
 
 	it('wraps the location in an history object', () => {
-		const result = shallow(<ServerRouter location={location} routeConfig={routeConfig} />);
+		const result = shallow(
+			<ServerRouter location={location} routeConfig={routeConfig} />,
+		);
 
 		expect(result.node.props.history).toBeDefined();
 		expect(result.node.props.history.location).toBeDefined();

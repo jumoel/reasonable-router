@@ -16,7 +16,9 @@ describe('<BrowserRouter />', () => {
 	const location = '/?search#hash';
 
 	it('renders a <Route /> component', () => {
-		const result = shallow(<BrowserRouter location={location} routeConfig={routeConfig} />);
+		const result = shallow(
+			<BrowserRouter location={location} routeConfig={routeConfig} />,
+		);
 
 		expect(result.type()).toEqual(Router);
 	});
