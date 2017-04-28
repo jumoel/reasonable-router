@@ -25,7 +25,7 @@ export default class Link extends Component {
 	};
 
 	render() {
-		const { to, params, children } = this.props;
+		const { to, params, children, style, className } = this.props;
 		const { push } = this.context;
 		const NODE_ENV = process && process.env && process.env.NODE_ENV
 			? process.env.NODE_ENV
@@ -52,6 +52,8 @@ export default class Link extends Component {
 					push(href);
 				}}
 				children={children}
+				className={className}
+				style={style}
 			/>
 		);
 	}
