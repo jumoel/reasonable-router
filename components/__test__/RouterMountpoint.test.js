@@ -8,7 +8,11 @@ describe('<RouterMountpoint />', () => {
 		const Component = props => <pre>{JSON.stringify(props)}</pre>;
 
 		const params = { prop: 'value' };
-		const getRouterRenderProperties = () => ({ Component, params });
+		const getRouterRenderProperties = () => ({
+			Component,
+			params,
+			name: 'Test',
+		});
 
 		const result = shallow(<RouterMountpoint />, {
 			context: { getRouterRenderProperties },
@@ -17,7 +21,9 @@ describe('<RouterMountpoint />', () => {
 		const child = result.first().shallow();
 
 		expect(result.name()).toEqual('Component');
-		expect(child.text()).toEqual('{"routeParams":{"prop":"value"}}');
+		expect(child.text()).toEqual(
+			'{"route":{"name":"Test","params":{"prop":"value"}}}',
+		);
 		expect(child.name()).toEqual('pre');
 	});
 });

@@ -7,8 +7,12 @@ export default class RouterMountpoint extends Component {
 	};
 
 	render() {
-		const { params, Component } = this.context.getRouterRenderProperties();
+		const {
+			params,
+			Component,
+			...rest
+		} = this.context.getRouterRenderProperties();
 
-		return <Component routeParams={params} />;
+		return <Component route={{ ...rest, params }} />;
 	}
 }
