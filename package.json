@@ -1,6 +1,6 @@
 {
   "name": "reasonable-router",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "A reasonable (and reasonably simple) router for React",
   "main": "lib/index.js",
   "scripts": {
