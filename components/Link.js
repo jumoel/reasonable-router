@@ -51,10 +51,11 @@ export default class Link extends Component {
 					e.preventDefault();
 					push(href);
 				}}
-				children={children}
 				className={className}
 				style={style}
-			/>
+			>
+				{children}
+			</a>
 		);
 	}
 }
