@@ -10,7 +10,9 @@ describe('<Fragment />', () => {
 
 	it('renders when the route matches', () => {
 		const result = shallow(
-			<Fragment forRoute="/page"><h1>Text</h1></Fragment>,
+			<Fragment forRoute="/page">
+				<h1>Text</h1>
+			</Fragment>,
 			{ context: location('/page') },
 		);
 
@@ -19,7 +21,9 @@ describe('<Fragment />', () => {
 
 	it('does not render when the route does not match', () => {
 		const result = shallow(
-			<Fragment forRoute="/another-page"><h1>Text</h1></Fragment>,
+			<Fragment forRoute="/another-page">
+				<h1>Text</h1>
+			</Fragment>,
 			{ context: location('/page') },
 		);
 
@@ -27,9 +31,14 @@ describe('<Fragment />', () => {
 	});
 
 	it('passes route params as props', () => {
-		const PropPrinter = ({ params }) => <p>{JSON.stringify(params)}</p>;
+		const PropPrinter = ({ params }) =>
+			<p>
+				{JSON.stringify(params)}
+			</p>;
 		const result = shallow(
-			<Fragment forRoute="/:name"><PropPrinter /></Fragment>,
+			<Fragment forRoute="/:name">
+				<PropPrinter />
+			</Fragment>,
 			{ context: location('/a-name') },
 		)
 			.first()

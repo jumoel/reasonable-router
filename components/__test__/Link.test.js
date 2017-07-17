@@ -64,9 +64,14 @@ describe('<Link />', () => {
 		const getRoutes = () => ({ '/hello/:name': { name: 'Hello' } });
 		const params = { name: 'world' };
 
-		const link = shallow(<Link to="Hello" params={params}>Linktext</Link>, {
-			context: { getRoutes },
-		});
+		const link = shallow(
+			<Link to="Hello" params={params}>
+				Linktext
+			</Link>,
+			{
+				context: { getRoutes },
+			},
+		);
 
 		expect(link.prop('href')).toEqual('/hello/world');
 		expect(link.text()).toEqual('Linktext');
