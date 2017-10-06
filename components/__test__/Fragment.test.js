@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow } from './enzyme';
 
 import Fragment from '../Fragment';
 
@@ -31,10 +31,7 @@ describe('<Fragment />', () => {
 	});
 
 	it('passes route params as props', () => {
-		const PropPrinter = ({ params }) =>
-			<p>
-				{JSON.stringify(params)}
-			</p>;
+		const PropPrinter = ({ params }) => <p>{JSON.stringify(params)}</p>;
 		const result = shallow(
 			<Fragment forRoute="/:name">
 				<PropPrinter />

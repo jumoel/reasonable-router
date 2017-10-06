@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow } from './enzyme';
 
 import BrowserRouter from '../BrowserRouter';
 import Router from '../Router';
@@ -26,6 +26,6 @@ describe('<BrowserRouter />', () => {
 	it('passes along the routeConfig object', () => {
 		const result = shallow(<BrowserRouter routeConfig={routeConfig} />);
 
-		expect(result.node.props.routeConfig).toEqual(routeConfig);
+		expect(result.getElement().props.routeConfig).toEqual(routeConfig);
 	});
 });

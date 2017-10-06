@@ -1,14 +1,11 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow } from './enzyme';
 
 import RouterMountpoint from '../RouterMountpoint';
 
 describe('<RouterMountpoint />', () => {
 	it('renders the supplied component and props', () => {
-		const Component = props =>
-			<pre>
-				{JSON.stringify(props)}
-			</pre>;
+		const Component = props => <pre>{JSON.stringify(props)}</pre>;
 
 		const params = { prop: 'value' };
 		const getRouterRenderProperties = () => ({

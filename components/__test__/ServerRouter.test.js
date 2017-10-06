@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow } from './enzyme';
 
 import ServerRouter from '../ServerRouter';
 import Router from '../Router';
@@ -28,7 +28,7 @@ describe('<ServerRouter />', () => {
 			<ServerRouter location={location} routeConfig={routeConfig} />,
 		);
 
-		expect(result.node.props.routeConfig).toEqual(routeConfig);
+		expect(result.getElement().props.routeConfig).toEqual(routeConfig);
 	});
 
 	it('does not pass on the location property', () => {
@@ -36,7 +36,7 @@ describe('<ServerRouter />', () => {
 			<ServerRouter location={location} routeConfig={routeConfig} />,
 		);
 
-		expect(result.node.props.location).toBeUndefined();
+		expect(result.getElement().props.location).toBeUndefined();
 	});
 
 	it('wraps the location in an history object', () => {
@@ -44,10 +44,12 @@ describe('<ServerRouter />', () => {
 			<ServerRouter location={location} routeConfig={routeConfig} />,
 		);
 
-		expect(result.node.props.history).toBeDefined();
-		expect(result.node.props.history.location).toBeDefined();
-		expect(result.node.props.history.location.pathname).toEqual('/');
-		expect(result.node.props.history.location.search).toEqual('?search');
-		expect(result.node.props.history.location.hash).toEqual('#hash');
+		expect(result.getElement().props.history).toBeDefined();
+		expect(result.getElement().props.history.location).toBeDefined();
+		expect(result.getElement().props.history.location.pathname).toEqual('/');
+		expect(result.getElement().props.history.location.search).toEqual(
+			'?search',
+		);
+		expect(result.getElement().props.history.location.hash).toEqual('#hash');
 	});
 });
