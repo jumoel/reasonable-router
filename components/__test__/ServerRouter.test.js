@@ -1,8 +1,8 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import ServerRouter from '../ServerRouter';
-import Router from '../Router';
+import { ServerRouter } from '../ServerRouter';
+import { Router } from '../Router';
 
 describe('<ServerRouter />', () => {
 	const NotFound = () => <h1>Not Found</h1>;

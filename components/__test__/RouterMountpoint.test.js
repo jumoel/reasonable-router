@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import RouterMountpoint from '../RouterMountpoint';
+import { RouterMountpoint } from '../RouterMountpoint';
 
 describe('<RouterMountpoint />', () => {
 	it('renders the supplied component and props', () => {

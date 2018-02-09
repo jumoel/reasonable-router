@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { matchSingleRoute } from './matchRoute';
 
-const Fragment = (props, context) => {
+export const Fragment = (props, context) => {
 	const { getCurrentLocation } = context;
 	const { forRoute, children } = props;
 
@@ -28,5 +28,3 @@ const Fragment = (props, context) => {
 Fragment.contextTypes = {
 	getCurrentLocation: PropTypes.func,
 };
-
-export default Fragment;

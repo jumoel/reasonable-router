@@ -1,8 +1,8 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import BrowserRouter from '../BrowserRouter';
-import Router from '../Router';
+import { BrowserRouter } from '../BrowserRouter';
+import { Router } from '../Router';
 
 describe('<BrowserRouter />', () => {
 	const NotFound = () => <h1>Not Found</h1>;

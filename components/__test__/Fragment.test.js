@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import Fragment from '../Fragment';
+import { Fragment } from '../Fragment';
 
 describe('<Fragment />', () => {
 	const location = (pathname) => ({

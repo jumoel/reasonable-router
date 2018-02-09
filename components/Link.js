@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 
 import { formatRoute } from './formatRoutes';
 
-class Link extends Component {
+export class Link extends Component {
 	routeFromName(to, params) {
 		const routes = this.context.getRoutes();
 		const routeKey = Object.keys(routes).find(
-			routeKey => routes[routeKey].name && routes[routeKey].name === to,
+			(routeKey) => routes[routeKey].name && routes[routeKey].name === to,
 		);
 
 		if (!routeKey) {
@@ -43,7 +43,7 @@ class Link extends Component {
 		return (
 			<a
 				href={href}
-				onClick={e => {
+				onClick={(e) => {
 					e.preventDefault();
 					push(href);
 				}}
@@ -60,5 +60,3 @@ Link.contextTypes = {
 	push: PropTypes.func,
 	getRoutes: PropTypes.func,
 };
-
-export default Link;

@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import matchRoute from './matchRoute';
+import { matchRoute } from './matchRoute';
 
-class Router extends Component {
+export class Router extends Component {
 	constructor(props) {
 		super(...arguments);
 
@@ -81,5 +81,3 @@ Router.childContextTypes = {
 	getCurrentLocation: PropTypes.func,
 	getRoutes: PropTypes.func,
 };
-
-export default Router;

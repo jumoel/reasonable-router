@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { createBrowserHistory } from 'history';
 
-import Router from './Router';
+import { Router } from './Router';
 
-export default class BrowserRouter extends Component {
+export class BrowserRouter extends Component {
 	constructor() {
 		super(...arguments);
 

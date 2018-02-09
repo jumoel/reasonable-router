@@ -3,8 +3,8 @@ import { render, shallow } from 'enzyme';
 
 import { createMemoryHistory } from 'history';
 
-import Router from '../Router';
-import RouterMountpoint from '../RouterMountpoint';
+import { Router } from '../Router';
+import { RouterMountpoint } from '../RouterMountpoint';
 
 describe('<Router />', () => {
 	const NotFound = () => <h1>Not Found</h1>;

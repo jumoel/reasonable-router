@@ -1,6 +1,6 @@
 import React from 'react';
 
-import formatRoutes from '../formatRoutes';
+import { formatRoutes } from '../formatRoutes';
 
 describe('formatRoutes', () => {
 	it('returns an array', () => {

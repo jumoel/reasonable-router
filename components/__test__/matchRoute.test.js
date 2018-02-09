@@ -1,6 +1,6 @@
 import React from 'react';
 
-import matchRoute, { matchSingleRoute } from '../matchRoute';
+import { matchRoute, matchSingleRoute } from '../matchRoute';
 
 describe('matchRoute', () => {
 	const Miss = () => <h1>Miss</h1>;
