@@ -2,7 +2,6 @@ components
 .babelrc
 .editorconfig
 .eslintignore
-.flowconfig
 .gitignore
 .npmignore
 .nvmrc

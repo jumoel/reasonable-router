@@ -4,7 +4,7 @@ import { shallow } from 'enzyme';
 import Fragment from '../Fragment';
 
 describe('<Fragment />', () => {
-	const location = pathname => ({
+	const location = (pathname) => ({
 		getCurrentLocation: () => ({ pathname }),
 	});
 

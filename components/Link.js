@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { formatRoute } from './formatRoutes';
 
-export default class Link extends Component {
+class Link extends Component {
 	routeFromName(to, params) {
 		const routes = this.context.getRoutes();
 		const routeKey = Object.keys(routes).find(
@@ -18,11 +18,6 @@ export default class Link extends Component {
 
 		return matched.route.reverse(params || {});
 	}
-
-	static contextTypes = {
-		push: PropTypes.func,
-		getRoutes: PropTypes.func,
-	};
 
 	render() {
 		const { to, params, children, style, className } = this.props;
@@ -60,3 +55,10 @@ export default class Link extends Component {
 		);
 	}
 }
+
+Link.contextTypes = {
+	push: PropTypes.func,
+	getRoutes: PropTypes.func,
+};
+
+export default Link;

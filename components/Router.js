@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import matchRoute from './matchRoute';
 
-export default class Router extends Component {
+class Router extends Component {
 	constructor(props) {
 		super(...arguments);
 
@@ -17,13 +17,6 @@ export default class Router extends Component {
 			currentLocation: props.history.location,
 		};
 	}
-
-	static childContextTypes = {
-		push: PropTypes.func,
-		getRouterRenderProperties: PropTypes.func,
-		getCurrentLocation: PropTypes.func,
-		getRoutes: PropTypes.func,
-	};
 
 	getRouterRenderProperties() {
 		return {
@@ -81,3 +74,12 @@ export default class Router extends Component {
 		return React.Children.only(children);
 	}
 }
+
+Router.childContextTypes = {
+	push: PropTypes.func,
+	getRouterRenderProperties: PropTypes.func,
+	getCurrentLocation: PropTypes.func,
+	getRoutes: PropTypes.func,
+};
+
+export default Router;

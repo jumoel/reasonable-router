@@ -16,7 +16,7 @@ describe('<Router />', () => {
 		miss: NotFound,
 	};
 
-	const history = page => createMemoryHistory({ initialEntries: [page] });
+	const history = (page) => createMemoryHistory({ initialEntries: [page] });
 
 	it('renders a page when the route matches', () => {
 		const result = render(

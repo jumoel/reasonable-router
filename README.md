@@ -137,15 +137,6 @@ The `routes` object used to render the proper component takes on the form of a
 map of strings to objects. These objects must contain a `component` property.
 The `component` is what will be rendered when a route matches.
 
-In Flow:
-
-```flow
-{
-	routes: { [key: string]: { component: ReactClass<*> } }
-	miss: ReactClass<*>
-}
-```
-
 The keys of the `routes` property corresponds to the routes. The keys can be
 plain text (`/some-page`) or contain patterns (as described in the
 [`route-parser` documentation](https://www.npmjs.com/package/route-parser)).

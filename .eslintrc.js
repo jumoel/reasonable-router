@@ -1,29 +1,16 @@
 module.exports = {
 	parser: 'babel-eslint',
 
-	plugins: [
-		'eslint-plugin-babel',
-		'eslint-plugin-react',
-		'eslint-plugin-prettier',
-		//'eslint-plugin-flowtype',
-	],
+	plugins: ['eslint-plugin-babel', 'eslint-plugin-react'],
 
 	extends: [
 		'eslint:recommended',
 		'plugin:react/recommended',
-		'prettier',
-		//'plugin:flowtype/recommended',
+		'plugin:prettier/recommended',
 	],
 
 	rules: {
-		'prettier/prettier': ['error', {
-			trailingComma: 'all',
-			singleQuote: true,
-			useTabs: true,
-			bracketSpacing: true,
-			semi: true,
-		}],
-		'eqeqeq': ['error'],
+		eqeqeq: ['error'],
 		'react/prop-types': ['off'],
 	},
 

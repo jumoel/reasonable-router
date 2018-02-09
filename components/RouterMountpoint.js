@@ -1,11 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-export default class RouterMountpoint extends Component {
-	static contextTypes = {
-		getRouterRenderProperties: PropTypes.func,
-	};
-
+class RouterMountpoint extends Component {
 	render() {
 		const {
 			params,
@@ -16,3 +12,9 @@ export default class RouterMountpoint extends Component {
 		return <Component route={{ ...rest, params }} />;
 	}
 }
+
+RouterMountpoint.contextTypes = {
+	getRouterRenderProperties: PropTypes.func,
+};
+
+export default RouterMountpoint;

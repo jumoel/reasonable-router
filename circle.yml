@@ -1,6 +1,6 @@
 machine:
   node:
-    version: "8.6.0"
+    version: "9.5.0"
   environment:
     PATH: "${PATH}:${HOME}/${CIRCLE_PROJECT_REPONAME}/node_modules/.bin"
 
@@ -13,7 +13,6 @@ dependencies:
 test:
   pre:
     - yarn run lint
-    #- yarn run flow
   override:
     - yarn run test:ci
 

@@ -1,7 +1,7 @@
 import Route from 'route-parser';
 
-const formatRoutes = routes => {
-	return Object.keys(routes).map(key => {
+const formatRoutes = (routes) => {
+	return Object.keys(routes).map((key) => {
 		const route = routes[key];
 		return formatRoute(key, route);
 	});
