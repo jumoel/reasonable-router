@@ -4,9 +4,7 @@ import { formatRoutes } from './formatRoutes';
 export const matchRoute = (routeConfig, pathname) => {
 	const formattedRoutes = formatRoutes(routeConfig.routes);
 
-	const foundRoute = formattedRoutes.find(({ route }) => {
-		return route.match(pathname);
-	});
+	const foundRoute = formattedRoutes.find(({ route }) => route.match(pathname));
 
 	return foundRoute
 		? { ...foundRoute, params: foundRoute.route.match(pathname) }
