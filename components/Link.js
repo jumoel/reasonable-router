@@ -4,6 +4,12 @@ import PropTypes from 'prop-types';
 import { formatRoute } from './formatRoutes';
 
 export class Link extends Component {
+	constructor() {
+		super(...arguments);
+
+		this.onClick = this.onClick.bind(this);
+	}
+
 	routeFromName(to, params) {
 		const routes = this.context.getRoutes();
 		const routeKey = Object.keys(routes).find(
@@ -19,9 +25,17 @@ export class Link extends Component {
 		return matched.route.reverse(params || {});
 	}
 
+	onClick(href) {
+		const { push } = this.context;
+		return (e) => {
+			e.preventDefault();
+
+			push(href);
+		};
+	}
+
 	render() {
 		const { to, params, children, style, className } = this.props;
-		const { push } = this.context;
 
 		const href = to ? this.routeFromName(to, params) : this.props.href;
 
@@ -39,10 +53,7 @@ export class Link extends Component {
 		return (
 			<a
 				href={href}
-				onClick={(e) => {
-					e.preventDefault();
-					push(href);
-				}}
+				onClick={this.onClick(href)}
 				className={className}
 				style={style}
 			>
