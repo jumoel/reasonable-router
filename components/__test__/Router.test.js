@@ -96,7 +96,6 @@ describe('<Router />', () => {
 			<Router routeConfig={routeConfig} history={hist} />,
 		);
 
-		const { currentLocation } = wrapper.state();
 		const childContext = wrapper.instance().getChildContext();
 
 		const expectedLocation = {
@@ -106,7 +105,6 @@ describe('<Router />', () => {
 			state: undefined,
 		};
 
-		expect(currentLocation).toMatchObject(expectedLocation);
 		expect(childContext.getCurrentLocation()).toMatchObject(expectedLocation);
 	});
 

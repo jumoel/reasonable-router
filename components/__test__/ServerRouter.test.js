@@ -1,8 +1,9 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { render, shallow } from 'enzyme';
 
+import { matchRoute } from '../matchRoute';
 import { ServerRouter } from '../ServerRouter';
-import { Router } from '../Router';
+import { RouterMountpoint } from '../RouterMountpoint';
 
 describe('<ServerRouter />', () => {
 	const NotFound = () => <h1>Not Found</h1>;
@@ -13,43 +14,73 @@ describe('<ServerRouter />', () => {
 		},
 		miss: NotFound,
 	};
-	const location = '/?search#hash';
 
-	it('renders a <Route /> component', () => {
-		const result = shallow(
-			<ServerRouter location={location} routeConfig={routeConfig} />,
+	it('renders a page when the route matches', () => {
+		const location = '/';
+		const matchedRoute = matchRoute(routeConfig, location);
+
+		const result = render(
+			<ServerRouter matchedRoute={matchedRoute} location={location}>
+				<RouterMountpoint />
+			</ServerRouter>,
 		);
 
-		expect(result.type()).toEqual(Router);
+		expect(result.text()).toEqual('Page');
 	});
 
-	it('passes along the routeConfig object', () => {
-		const result = shallow(
-			<ServerRouter location={location} routeConfig={routeConfig} />,
+	it('renders a miss page when the route does not match', () => {
+		const location = '/not-matching';
+		const matchedRoute = matchRoute(routeConfig, location);
+
+		const result = render(
+			<ServerRouter matchedRoute={matchedRoute} location={location}>
+				<RouterMountpoint />
+			</ServerRouter>,
 		);
 
-		expect(result.getElement().props.routeConfig).toEqual(routeConfig);
+		expect(result.text()).toEqual('Not Found');
 	});
 
-	it('does not pass on the location property', () => {
-		const result = shallow(
-			<ServerRouter location={location} routeConfig={routeConfig} />,
+	it('supplies the proper location in context', () => {
+		const location = '/another-page?search#hash';
+		const matchedRoute = matchRoute(routeConfig, location);
+
+		const wrapper = shallow(
+			<ServerRouter matchedRoute={matchedRoute} location={location} />,
 		);
 
-		expect(result.getElement().props.location).toBeUndefined();
+		const childContext = wrapper.instance().getChildContext();
+
+		const expectedLocation = {
+			hash: '#hash',
+			pathname: '/another-page',
+			search: '?search',
+			state: undefined,
+		};
+
+		expect(childContext.getCurrentLocation()).toMatchObject(expectedLocation);
 	});
 
-	it('wraps the location in an history object', () => {
-		const result = shallow(
-			<ServerRouter location={location} routeConfig={routeConfig} />,
+	it('supplies the proper routes in context', () => {
+		const location = '/';
+		const matchedRoute = matchRoute(routeConfig, location);
+
+		const wrapper = shallow(
+			<ServerRouter
+				routeConfig={routeConfig}
+				matchedRoute={matchedRoute}
+				location={location}
+			/>,
 		);
 
-		expect(result.getElement().props.history).toBeDefined();
-		expect(result.getElement().props.history.location).toBeDefined();
-		expect(result.getElement().props.history.location.pathname).toEqual('/');
-		expect(result.getElement().props.history.location.search).toEqual(
-			'?search',
-		);
-		expect(result.getElement().props.history.location.hash).toEqual('#hash');
+		const childContext = wrapper.instance().getChildContext();
+
+		const expectedRoutes = {
+			'/': {
+				component: Page,
+			},
+		};
+
+		expect(childContext.getRoutes()).toMatchObject(expectedRoutes);
 	});
 });
