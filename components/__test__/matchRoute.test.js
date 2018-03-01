@@ -11,14 +11,18 @@ describe('matchRoute', () => {
 	const routeConfig = {
 		routes: {
 			'/': { component: Frontpage, name: 'Frontpage' },
+			'/redirect': { redirectTo: '/' },
 		},
 		miss: Miss,
 	};
+
+	it('');
 
 	it('does not modify the route config', () => {
 		const routeConfigCopy = {
 			routes: {
 				'/': { component: Frontpage, name: 'Frontpage' },
+				'/redirect': { redirectTo: '/' },
 			},
 			miss: Miss,
 		};
@@ -36,7 +40,7 @@ describe('matchRoute', () => {
 	});
 
 	it('does not match an invalid route', () => {
-		const route = matchRoute(routeConfig, '/not-foud');
+		const route = matchRoute(routeConfig, '/not-found');
 
 		expect(route.name).toBeUndefined();
 		expect(route.component.displayName).toEqual('Miss');
