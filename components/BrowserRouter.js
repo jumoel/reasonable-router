@@ -5,10 +5,10 @@ import { createBrowserHistory } from 'history';
 import { matchRoute } from './matchRoute';
 
 export class BrowserRouter extends Component {
-	constructor() {
+	constructor(props) {
 		super(...arguments);
 
-		const history = createBrowserHistory();
+		const history = props.history || createBrowserHistory();
 
 		this.state = {
 			history,
