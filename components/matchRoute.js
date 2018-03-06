@@ -1,19 +1,20 @@
-import Route from 'route-parser';
-import { formatRoutes } from './formatRoutes';
+import { formatRoute, formatRoutes, Route } from './formatRoutes';
 
 export const matchRoute = (routeConfig, pathname) => {
 	const formattedRoutes = formatRoutes(routeConfig.routes);
 
-	const foundRoute = formattedRoutes.find(({ route }) => route.match(pathname));
+	const foundRoute = formattedRoutes.find(({ route }) =>
+		route.matches(pathname),
+	);
 
 	return foundRoute
-		? { ...foundRoute, params: foundRoute.route.match(pathname) }
+		? { ...foundRoute, params: foundRoute.route.matches(pathname) }
 		: { component: routeConfig.miss, params: {}, isMiss: true };
 };
 
-export const matchSingleRoute = (route, pathname) => {
-	const routeMatcher = new Route(route);
-	const matched = routeMatcher.match(pathname);
+export const matchSingleRoute = (routeSpec, pathname) => {
+	const route = new Route(routeSpec);
+	const matched = route.matches(pathname);
 
-	return matched ? { params: matched } : false;
+	return matched ? { params: route.params(pathname) } : false;
 };

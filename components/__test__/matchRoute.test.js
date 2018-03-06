@@ -16,7 +16,13 @@ describe('matchRoute', () => {
 		miss: Miss,
 	};
 
-	it('');
+	xit('redirects properly', () => {
+		const route = matchRoute(routeConfig, '/redirect');
+
+		expect(route.name).toEqual('Frontpage');
+		expect(route.component.displayName).toEqual('Frontpage');
+		expect(route.isRedirect).toBeTrue();
+	});
 
 	it('does not modify the route config', () => {
 		const routeConfigCopy = {

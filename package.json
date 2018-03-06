@@ -10,12 +10,14 @@
 		"test:watch": "jest --watch --notify",
 		"test:all": "npm run lint && npm run test",
 		"build:lib": "babel components --out-dir lib --ignore components/__test__",
-		"prepare":
-			"in-publish && (rimraf lib && npm run test:all && npm run build:lib) || exit 0",
+		"prepare": "in-publish && (rimraf lib && npm run test:all && npm run build:lib) || exit 0",
 		"postpublish": "git push origin --tags"
 	},
 	"jest": {
-		"collectCoverageFrom": ["components/*.js", "!components/index.js"],
+		"collectCoverageFrom": [
+			"components/*.js",
+			"!components/index.js"
+		],
 		"setupFiles": [
 			"./components/__test__/__setup__/shim.js",
 			"./components/__test__/__setup__/adapter.js"
@@ -25,7 +27,13 @@
 		"type": "git",
 		"url": "https://github.com/jumoel/reasonable-router.git"
 	},
-	"keywords": ["react", "router", "routing", "route", "routes"],
+	"keywords": [
+		"react",
+		"router",
+		"routing",
+		"route",
+		"routes"
+	],
 	"author": "Julian Møller <code@jumoel.com>",
 	"license": "MIT",
 	"bugs": {
@@ -34,8 +42,8 @@
 	"homepage": "https://github.com/jumoel/reasonable-router#readme",
 	"dependencies": {
 		"history": "^4.6.0",
-		"prop-types": "^15.5.7",
-		"route-parser": "^0.0.5"
+		"path-to-regexp": "^2.1.0",
+		"prop-types": "^15.5.7"
 	},
 	"devDependencies": {
 		"@babel/cli": "^7.0.0-beta.39",

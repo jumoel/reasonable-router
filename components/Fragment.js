@@ -5,8 +5,9 @@ import { matchSingleRoute } from './matchRoute';
 export const Fragment = (props, context) => {
 	const { getCurrentLocation } = context;
 	const { forRoute, children } = props;
+	const { pathname } = getCurrentLocation();
 
-	const route = matchSingleRoute(forRoute, getCurrentLocation().pathname);
+	const route = matchSingleRoute(forRoute, pathname);
 
 	if (!route) {
 		return null;
