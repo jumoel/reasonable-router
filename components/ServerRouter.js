@@ -1,25 +1,23 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { createMemoryHistory } from 'history';
+import { Context } from './Context';
 
 export class ServerRouter extends Component {
 	constructor(props) {
 		super(...arguments);
 
-		this.state = {
-			history: createMemoryHistory({ initialEntries: [props.location] }),
-		};
-	}
+		const history = createMemoryHistory({ initialEntries: [props.location] });
 
-	getChildContext() {
-		return {
-			push: (path, state = {}) => this.state.history.push(path, state),
-			getCurrentLocation: () => this.state.history.location,
-			getRouterRenderProperties: () => ({
-				params: this.props.matchedRoute.params,
-				Component: this.props.matchedRoute.component,
-			}),
-			getRoutes: () => this.props.routeConfig.routes,
+		this.state = {
+			context: {
+				push: (path, state = {}) => history.push(path, state),
+				currentLocation: history.location,
+				routerRenderProperties: {
+					params: this.props.matchedRoute.params,
+					Component: this.props.matchedRoute.component,
+				},
+				routes: props.routeConfig.routes,
+			},
 		};
 	}
 
@@ -30,13 +28,8 @@ export class ServerRouter extends Component {
 			return null;
 		}
 
-		return React.Children.only(children);
+		return (
+			<Context.Provider value={this.state.context}>{children}</Context.Provider>
+		);
 	}
 }
-
-ServerRouter.childContextTypes = {
-	push: PropTypes.func,
-	getRouterRenderProperties: PropTypes.func,
-	getCurrentLocation: PropTypes.func,
-	getRoutes: PropTypes.func,
-};

@@ -1,18 +1,14 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import { Context } from './Context';
 
 export class RouterMountpoint extends Component {
-	render() {
-		const {
-			params,
-			Component,
-			...rest
-		} = this.context.getRouterRenderProperties();
+	renderComponent({ routerRenderProperties }) {
+		const { Component, ...rest } = routerRenderProperties;
 
-		return <Component route={{ ...rest, params }} />;
+		return <Component route={{ ...rest }} />;
+	}
+
+	render() {
+		return <Context.Consumer>{this.renderComponent}</Context.Consumer>;
 	}
 }
-
-RouterMountpoint.contextTypes = {
-	getRouterRenderProperties: PropTypes.func,
-};

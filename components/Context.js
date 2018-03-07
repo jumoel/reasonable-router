@@ -2,23 +2,23 @@ import createContext from 'create-react-context';
 
 // eslint-disable-next-line no-unused-vars
 const push = (path, state = {}) => {};
-const getRouterRenderProperties = () => ({
+const routerRenderProperties = {
 	params: {},
 	Component: () => null,
-});
-const getCurrentLocation = () => ({
+};
+const currentLocation = {
 	hash: '',
 	pathname: '/',
 	search: '',
 	state: undefined,
-});
-const getRoutes = () => ({});
+};
+const routes = {};
 
 const defaultContext = {
 	push,
-	getRouterRenderProperties,
-	getCurrentLocation,
-	getRoutes,
+	routerRenderProperties,
+	currentLocation,
+	routes,
 };
 
 export const Context = createContext(defaultContext);

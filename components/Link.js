@@ -10,6 +10,7 @@ export class Link extends Component {
 		this.onClick = this.onClick.bind(this);
 	}
 
+	// TODO: Extract this to another file
 	routeFromName(to, params) {
 		const routes = this.context.getRoutes();
 		const routeKey = Object.keys(routes).find(
@@ -63,6 +64,7 @@ export class Link extends Component {
 	}
 }
 
+// TODO: Change to <Context.Consumer />
 Link.contextTypes = {
 	push: PropTypes.func,
 	getRoutes: PropTypes.func,
