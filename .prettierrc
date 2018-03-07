@@ -4,5 +4,6 @@
 	"trailingComma": "all",
 	"jsxBracketSameLine": false,
 	"useTabs": true,
-	"arrowParens": "always"
+	"arrowParens": "always",
+	"printWidth": 80
 }
