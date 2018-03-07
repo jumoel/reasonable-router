@@ -41,6 +41,7 @@
 	},
 	"homepage": "https://github.com/jumoel/reasonable-router#readme",
 	"dependencies": {
+		"create-react-context": "^0.2.1",
 		"history": "^4.6.0",
 		"path-to-regexp": "^2.1.0",
 		"prop-types": "^15.5.7"
