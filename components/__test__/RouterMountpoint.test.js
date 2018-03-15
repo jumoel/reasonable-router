@@ -1,6 +1,7 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { mount } from 'enzyme';
 
+import { Context } from '../Context';
 import { RouterMountpoint } from '../RouterMountpoint';
 
 describe('<RouterMountpoint />', () => {
@@ -8,22 +9,23 @@ describe('<RouterMountpoint />', () => {
 		const Component = (props) => <pre>{JSON.stringify(props)}</pre>;
 
 		const params = { prop: 'value' };
-		const getRouterRenderProperties = () => ({
-			Component,
-			params,
-			name: 'Test',
-		});
+		const name = 'Test';
+		const routerRenderProperties = { Component, params, name };
 
-		const result = shallow(<RouterMountpoint />, {
-			context: { getRouterRenderProperties },
-		});
-
-		const child = result.first().shallow();
-
-		expect(result.name()).toEqual('Component');
-		expect(child.text()).toEqual(
-			'{"route":{"name":"Test","params":{"prop":"value"}}}',
+		const result = mount(
+			<Context.Provider value={{ routerRenderProperties }}>
+				<RouterMountpoint />
+			</Context.Provider>,
 		);
-		expect(child.name()).toEqual('pre');
+
+		/**
+		 * Everything but the Component should be passed as props,
+		 * just wrapped in a `route` attribute.
+		 */
+		const expected = { route: { params, name } };
+
+		expect(JSON.parse(result.text())).toEqual(expected);
+		expect(result.text()).toMatchSnapshot();
+		expect(result).toMatchSnapshot();
 	});
 });

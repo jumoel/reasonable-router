@@ -27,6 +27,8 @@ export class Fragment extends Component {
 		return React.Children.only(childrenWithParams);
 	}
 	render() {
-		return <Context.Consumer>{this.renderChildren}</Context.Consumer>;
+		return (
+			<Context.Consumer>{this.renderChildren.bind(this)}</Context.Consumer>
+		);
 	}
 }
