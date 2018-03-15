@@ -38,13 +38,12 @@ describe('<Fragment />', () => {
 	it('passes route params as props', () => {
 		const PropPrinter = ({ params }) => <p>{JSON.stringify(params)}</p>;
 		const result = render(
-			<Fragment forRoute="/:name">
-				<PropPrinter />
-			</Fragment>,
-			{ context: location('/a-name') },
-		)
-			.first()
-			.shallow(); // Render <PropPrinter /> as well
+			<Context.Provider value={location('/a-name')}>
+				<Fragment forRoute="/:name">
+					<PropPrinter />
+				</Fragment>
+			</Context.Provider>,
+		); // Render <PropPrinter /> as well
 
 		expect(result.text()).toEqual(JSON.stringify({ name: 'a-name' }));
 	});
