@@ -1,9 +1,10 @@
 import React from 'react';
-import { render, shallow } from 'enzyme';
+import { render, shallow, mount } from 'enzyme';
 
 import { matchRoute } from '../matchRoute';
 import { ServerRouter } from '../ServerRouter';
 import { RouterMountpoint } from '../RouterMountpoint';
+import { Context } from '../Context';
 
 describe('<ServerRouter />', () => {
 	const NotFound = () => <h1>Not Found</h1>;
@@ -20,7 +21,11 @@ describe('<ServerRouter />', () => {
 		const matchedRoute = matchRoute(routeConfig, location);
 
 		const result = render(
-			<ServerRouter matchedRoute={matchedRoute} location={location}>
+			<ServerRouter
+				matchedRoute={matchedRoute}
+				routeConfig={routeConfig}
+				location={location}
+			>
 				<RouterMountpoint />
 			</ServerRouter>,
 		);
@@ -33,7 +38,11 @@ describe('<ServerRouter />', () => {
 		const matchedRoute = matchRoute(routeConfig, location);
 
 		const result = render(
-			<ServerRouter matchedRoute={matchedRoute} location={location}>
+			<ServerRouter
+				matchedRoute={matchedRoute}
+				routeConfig={routeConfig}
+				location={location}
+			>
 				<RouterMountpoint />
 			</ServerRouter>,
 		);
@@ -41,46 +50,44 @@ describe('<ServerRouter />', () => {
 		expect(result.text()).toEqual('Not Found');
 	});
 
-	it('supplies the proper location in context', () => {
+	describe('context', () => {
 		const location = '/another-page?search#hash';
 		const matchedRoute = matchRoute(routeConfig, location);
 
-		const wrapper = shallow(
-			<ServerRouter matchedRoute={matchedRoute} location={location} />,
-		);
+		const ContextGrabber = () => null;
 
-		const childContext = wrapper.instance().getChildContext();
-
-		const expectedLocation = {
-			hash: '#hash',
-			pathname: '/another-page',
-			search: '?search',
-			state: undefined,
-		};
-
-		expect(childContext.getCurrentLocation()).toMatchObject(expectedLocation);
-	});
-
-	it('supplies the proper routes in context', () => {
-		const location = '/';
-		const matchedRoute = matchRoute(routeConfig, location);
-
-		const wrapper = shallow(
+		const wrapper = mount(
 			<ServerRouter
-				routeConfig={routeConfig}
 				matchedRoute={matchedRoute}
+				routeConfig={routeConfig}
 				location={location}
-			/>,
+			>
+				<Context.Consumer>
+					{(context) => <ContextGrabber context={context} />}
+				</Context.Consumer>
+			</ServerRouter>,
 		);
 
-		const childContext = wrapper.instance().getChildContext();
+		const { context } = wrapper.find(ContextGrabber).props();
 
-		const expectedRoutes = {
-			'/': {
-				component: Page,
-			},
-		};
+		it('supplies the proper location', () => {
+			const expectedLocation = {
+				hash: '#hash',
+				pathname: '/another-page',
+				search: '?search',
+			};
 
-		expect(childContext.getRoutes()).toMatchObject(expectedRoutes);
+			expect(context.currentLocation).toMatchObject(expectedLocation);
+		});
+
+		it('supplies the proper routes in context', () => {
+			const expectedRoutes = {
+				'/': {
+					component: Page,
+				},
+			};
+
+			expect(context.routes).toMatchObject(expectedRoutes);
+		});
 	});
 });
