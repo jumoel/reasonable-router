@@ -1,5 +1,5 @@
 Arguments: 
-  /Users/jumoel/.nvm/versions/node/v8.9.4/bin/node /usr/local/Cellar/yarn/1.5.1_1/libexec/bin/yarn.js run test
+  /Users/jumoel/.nvm/versions/node/v8.9.4/bin/node /usr/local/Cellar/yarn/1.5.1_1/libexec/bin/yarn.js run test:watcj
 
 PATH: 
   /usr/local/opt/python/libexec/bin:/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/bin:/usr/local/sbin:/usr/local/opt/python/libexec/bin:/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/bin:/Users/jumoel/.nvm/versions/node/v8.9.4/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/TeX/texbin:/Users/jumoel/.fzf/bin
@@ -23,17 +23,15 @@ npm manifest:
   		"lint": "eslint .",
   		"test": "jest",
   		"test:ci": "jest --coverage && cat ./coverage/lcov.info | coveralls",
-  		"test:watch": "jest --watch --notify",
+  		"test:watch": "jest --watch",
   		"test:all": "npm run lint && npm run test",
   		"build:lib": "babel components --out-dir lib --ignore components/__test__",
-  		"prepare": "in-publish && (rimraf lib && npm run test:all && npm run build:lib) || exit 0",
+  		"prepare":
+  			"in-publish && (rimraf lib && npm run test:all && npm run build:lib) || exit 0",
   		"postpublish": "git push origin --tags"
   	},
   	"jest": {
-  		"collectCoverageFrom": [
-  			"components/*.js",
-  			"!components/index.js"
-  		],
+  		"collectCoverageFrom": ["components/*.js", "!components/index.js"],
   		"setupFiles": [
   			"./components/__test__/__setup__/shim.js",
   			"./components/__test__/__setup__/adapter.js"
@@ -43,13 +41,7 @@ npm manifest:
   		"type": "git",
   		"url": "https://github.com/jumoel/reasonable-router.git"
   	},
-  	"keywords": [
-  		"react",
-  		"router",
-  		"routing",
-  		"route",
-  		"routes"
-  	],
+  	"keywords": ["react", "router", "routing", "route", "routes"],
   	"author": "Julian Møller <code@jumoel.com>",
   	"license": "MIT",
   	"bugs": {
@@ -4800,17 +4792,14 @@ Lockfile:
       window-size "0.1.0"
 
 Trace: 
-  Error: Command failed.
-  Exit code: 1
-  Command: sh
-  Arguments: -c jest
-  Directory: /Users/jumoel/Dropbox/projekter/reasonable-router
-  Output:
-  
-      at ProcessTermError.MessageError (/usr/local/Cellar/yarn/1.5.1_1/libexec/lib/cli.js:186:110)
-      at new ProcessTermError (/usr/local/Cellar/yarn/1.5.1_1/libexec/lib/cli.js:226:113)
-      at ChildProcess.<anonymous> (/usr/local/Cellar/yarn/1.5.1_1/libexec/lib/cli.js:30281:17)
-      at emitTwo (events.js:126:13)
-      at ChildProcess.emit (events.js:214:7)
-      at maybeClose (internal/child_process.js:925:16)
-      at Process.ChildProcess._handle.onexit (internal/child_process.js:209:5)
+  Error: Command "test:watcj" not found. Did you mean "test:watch"?
+      at new MessageError (/usr/local/Cellar/yarn/1.5.1_1/libexec/lib/cli.js:186:110)
+      at /usr/local/Cellar/yarn/1.5.1_1/libexec/lib/cli.js:87307:17
+      at Generator.next (<anonymous>)
+      at step (/usr/local/Cellar/yarn/1.5.1_1/libexec/lib/cli.js:98:30)
+      at /usr/local/Cellar/yarn/1.5.1_1/libexec/lib/cli.js:116:14
+      at new Promise (<anonymous>)
+      at new F (/usr/local/Cellar/yarn/1.5.1_1/libexec/lib/cli.js:23451:28)
+      at /usr/local/Cellar/yarn/1.5.1_1/libexec/lib/cli.js:95:12
+      at runCommand (/usr/local/Cellar/yarn/1.5.1_1/libexec/lib/cli.js:87312:22)
+      at Object.<anonymous> (/usr/local/Cellar/yarn/1.5.1_1/libexec/lib/cli.js:87412:14)

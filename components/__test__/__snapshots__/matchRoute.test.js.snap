@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`matchRoute redirects throws an error on circular redirects 1`] = `"Circular redirect detected: /1, /2, /1"`;
+
+exports[`matchRoute redirects throws an error on self-referential circular redirects 1`] = `"Circular redirect detected: /1, /1"`;

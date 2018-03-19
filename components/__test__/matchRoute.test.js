@@ -16,14 +16,6 @@ describe('matchRoute', () => {
 		miss: Miss,
 	};
 
-	xit('redirects properly', () => {
-		const route = matchRoute(routeConfig, '/redirect');
-
-		expect(route.name).toEqual('Frontpage');
-		expect(route.component.displayName).toEqual('Frontpage');
-		expect(route.isRedirect).toBeTrue();
-	});
-
 	it('does not modify the route config', () => {
 		const routeConfigCopy = {
 			routes: {
@@ -50,6 +42,43 @@ describe('matchRoute', () => {
 
 		expect(route.name).toBeUndefined();
 		expect(route.component.displayName).toEqual('Miss');
+	});
+
+	describe('redirects', () => {
+		it('redirects properly', () => {
+			const route = matchRoute(routeConfig, '/redirect');
+
+			expect(route.name).toEqual('Frontpage');
+			expect(route.component.displayName).toEqual('Frontpage');
+			expect(route.isRedirect).toEqual(true);
+		});
+
+		it('throws an error on circular redirects', () => {
+			let routes = {
+				'/1': { redirectTo: '/2' },
+				'/2': { redirectTo: '/1' },
+			};
+
+			const throws = () => {
+				matchRoute({ routes }, '/1');
+			};
+
+			expect(throws).toThrow();
+			expect(throws).toThrowErrorMatchingSnapshot();
+		});
+
+		it('throws an error on self-referential circular redirects', () => {
+			let routes = {
+				'/1': { redirectTo: '/1' },
+			};
+
+			const throws = () => {
+				matchRoute({ routes }, '/1');
+			};
+
+			expect(throws).toThrow();
+			expect(throws).toThrowErrorMatchingSnapshot();
+		});
 	});
 });
 
