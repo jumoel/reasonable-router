@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { createBrowserHistory } from 'history';
 
+import { Context } from './Context';
 import { matchRoute } from './matchRoute';
 
 export class BrowserRouter extends Component {
@@ -11,33 +11,23 @@ export class BrowserRouter extends Component {
 		const history = props.history || createBrowserHistory();
 
 		this.state = {
-			history,
-			currentLocation: history.location,
+			context: this.getDerivedContext(
+				history.location,
+				{
+					push: (path, state = {}) => history.push(path, state),
+					routerRenderProperties: {
+						params: {},
+						Component: null,
+						isMiss: false,
+					},
+					currentLocation: history.location,
+					routes: props.routeConfig.routes,
+				},
+				props,
+			),
 		};
 
 		this._historyUnlistener = history.listen(this.historyListener.bind(this));
-		this.mountPointComponent = null;
-		this.mountPointParams = {};
-	}
-
-	getRouterRenderProperties() {
-		return {
-			params: this.mountPointParams,
-			Component: this.mountPointComponent,
-		};
-	}
-
-	getRoutes() {
-		return this.props.routeConfig.routes;
-	}
-
-	getChildContext() {
-		return {
-			push: (path, state = {}) => this.state.history.push(path, state),
-			getRouterRenderProperties: this.getRouterRenderProperties.bind(this),
-			getCurrentLocation: () => this.state.currentLocation,
-			getRoutes: this.getRoutes.bind(this),
-		};
 	}
 
 	historyListener(location) {
@@ -46,7 +36,7 @@ export class BrowserRouter extends Component {
 		}
 
 		if (this.props.browser) {
-			this.setState({ currentLocation: location });
+			this.updateContext(location);
 		}
 	}
 
@@ -56,16 +46,34 @@ export class BrowserRouter extends Component {
 		}
 	}
 
+	getDerivedContext(location, prevContext, props) {
+		const { pathname } = location;
+		const { params, component: Component, isMiss } = matchRoute(
+			props.routeConfig,
+			pathname,
+		);
+
+		return {
+			...prevContext,
+			currentLocation: location,
+			routerRenderProperties: { Component, params, isMiss },
+		};
+	}
+
+	updateContext(location) {
+		this.setState((prevState, props) => {
+			return {
+				...prevState,
+				context: this.getDerivedContext(location, prevState.context, props),
+			};
+		});
+	}
+
 	render() {
-		const { children, onMiss, routeConfig } = this.props;
-		const { pathname } = this.state.currentLocation;
+		const { children, onMiss } = this.props;
+		const { isMiss } = this.state.context.routerRenderProperties;
 
-		const foundRoute = matchRoute(routeConfig, pathname);
-
-		this.mountPointComponent = foundRoute.component;
-		this.mountPointParams = foundRoute.params;
-
-		if (foundRoute.isMiss && onMiss) {
+		if (isMiss && onMiss) {
 			onMiss();
 		}
 
@@ -73,13 +81,8 @@ export class BrowserRouter extends Component {
 			return null;
 		}
 
-		return React.Children.only(children);
+		return (
+			<Context.Provider value={this.state.context}>{children}</Context.Provider>
+		);
 	}
 }
-
-BrowserRouter.childContextTypes = {
-	push: PropTypes.func,
-	getRouterRenderProperties: PropTypes.func,
-	getCurrentLocation: PropTypes.func,
-	getRoutes: PropTypes.func,
-};

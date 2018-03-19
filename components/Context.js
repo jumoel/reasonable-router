@@ -5,6 +5,7 @@ const push = (path, state = {}) => {};
 const routerRenderProperties = {
 	params: {},
 	Component: () => null,
+	isMiss: false,
 };
 const currentLocation = {
 	hash: '',

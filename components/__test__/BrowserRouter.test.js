@@ -1,10 +1,11 @@
 import React from 'react';
-import { render, shallow } from 'enzyme';
+import { render, shallow, mount } from 'enzyme';
 
 import { createMemoryHistory } from 'history';
 
 import { BrowserRouter } from '../BrowserRouter';
 import { RouterMountpoint } from '../RouterMountpoint';
+import { Context } from '../Context';
 
 describe('<BrowserRouter />', () => {
 	const NotFound = () => <h1>Not Found</h1>;
@@ -19,7 +20,7 @@ describe('<BrowserRouter />', () => {
 	const history = (page) => createMemoryHistory({ initialEntries: [page] });
 
 	it('renders a page when the route matches', () => {
-		const result = render(
+		const result = mount(
 			<BrowserRouter routeConfig={routeConfig} history={history('/')}>
 				<RouterMountpoint />
 			</BrowserRouter>,
@@ -96,48 +97,42 @@ describe('<BrowserRouter />', () => {
 		expect(onChange).toBeCalled();
 	});
 
-	it('supplies the proper location in context', () => {
+	describe('context', () => {
 		const hist = history('/another-page');
 
-		const wrapper = shallow(
-			<BrowserRouter routeConfig={routeConfig} history={hist} />,
+		const ContextGrabber = () => null;
+
+		const wrapper = mount(
+			<BrowserRouter routeConfig={routeConfig} history={hist}>
+				<Context.Consumer>
+					{(context) => <ContextGrabber context={context} />}
+				</Context.Consumer>
+			</BrowserRouter>,
 		);
 
-		const childContext = wrapper.instance().getChildContext();
+		const { context } = wrapper.find(ContextGrabber).props();
 
-		const expectedLocation = {
-			hash: '',
-			pathname: '/another-page',
-			search: '',
-			state: undefined,
-		};
+		it('supplies the proper location', () => {
+			const expectedLocation = {
+				hash: '',
+				pathname: '/another-page',
+				search: '',
+				state: undefined,
+			};
 
-		expect(childContext.getCurrentLocation()).toMatchObject(expectedLocation);
-	});
+			expect(context.currentLocation).toMatchObject(expectedLocation);
+		});
 
-	it('supplies the proper routes in context', () => {
-		const hist = history('/another-page');
+		it('supplies the proper routes', () => {
+			expect(context.routes).toEqual(routeConfig.routes);
+		});
 
-		const wrapper = shallow(
-			<BrowserRouter routeConfig={routeConfig} history={hist} />,
-		);
+		it('supplies the proper push function', () => {
+			const { push } = context;
+			push('/a-new-page');
 
-		const childContext = wrapper.instance().getChildContext();
-
-		expect(childContext.getRoutes()).toEqual(routeConfig.routes);
-	});
-
-	it('supplies the proper push function in context', () => {
-		const hist = history('/another-page');
-
-		const wrapper = shallow(
-			<BrowserRouter routeConfig={routeConfig} history={hist} />,
-		);
-
-		const { push } = wrapper.instance().getChildContext();
-		push('/a-new-page');
-
-		expect(typeof push).toEqual('function');
-		expect(hist.location.pathname).toEqual('/a-new-page');
+			expect(typeof push).toEqual('function');
+			expect(hist.location.pathname).toEqual('/a-new-page');
+		});
 	});
 });
