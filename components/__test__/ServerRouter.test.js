@@ -12,6 +12,7 @@ describe('<ServerRouter />', () => {
 	const routeConfig = {
 		routes: {
 			'/': { component: Page },
+			'/redirect': { redirectTo: '/' },
 		},
 		miss: NotFound,
 	};
@@ -48,6 +49,23 @@ describe('<ServerRouter />', () => {
 		);
 
 		expect(result.text()).toEqual('Not Found');
+	});
+
+	it('renders a page when the route matches a redirect', () => {
+		const location = '/redirect';
+		const matchedRoute = matchRoute(routeConfig, location);
+
+		const result = render(
+			<ServerRouter
+				matchedRoute={matchedRoute}
+				routeConfig={routeConfig}
+				location={location}
+			>
+				<RouterMountpoint />
+			</ServerRouter>,
+		);
+
+		expect(result.text()).toEqual('Page');
 	});
 
 	describe('context', () => {
