@@ -10,11 +10,20 @@ export class BrowserRouter extends Component {
 
 		const history = props.history || createBrowserHistory();
 
+		this.push = (path, state = {}) => {
+			history.push(path, state);
+		};
+
+		const routeProps = this.matchRoute(history.location);
+		if (routeProps.isRedirect) {
+			this.push(routeProps.pathname);
+		}
+
 		this.state = {
 			context: this.getDerivedContext(
 				history.location,
 				{
-					push: (path, state = {}) => history.push(path, state),
+					push: this.push,
 					routerRenderProperties: {
 						params: {},
 						Component: null,
@@ -35,9 +44,17 @@ export class BrowserRouter extends Component {
 			this.props.onChange(location);
 		}
 
-		if (this.props.browser) {
+		const routeProps = this.matchRoute(location);
+		if (routeProps.isRedirect) {
+			this.push(routeProps.pathname);
+		} else {
 			this.updateContext(location);
 		}
+	}
+
+	matchRoute(location) {
+		const { pathname } = location;
+		return matchRoute(this.props.routeConfig, pathname);
 	}
 
 	componentWillUnmount() {
@@ -48,7 +65,7 @@ export class BrowserRouter extends Component {
 
 	getDerivedContext(location, prevContext, props) {
 		const { pathname } = location;
-		const { params, component: Component, isMiss } = matchRoute(
+		const { params, component: Component, isMiss, isRedirect } = matchRoute(
 			props.routeConfig,
 			pathname,
 		);
@@ -56,7 +73,7 @@ export class BrowserRouter extends Component {
 		return {
 			...prevContext,
 			currentLocation: location,
-			routerRenderProperties: { Component, params, isMiss },
+			routerRenderProperties: { Component, params, isMiss, isRedirect },
 		};
 	}
 

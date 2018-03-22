@@ -37,7 +37,8 @@ export const matchRoute = (routeConfig, pathname) => {
 		? { component: routeConfig.miss, params: {}, isMiss, isRedirect }
 		: {
 				...finalRoute,
-				params: finalRoute.route.matches(pathname),
+				pathname: currentPath,
+				params: finalRoute.route.matches(currentPath),
 				isMiss,
 				isRedirect,
 		  };

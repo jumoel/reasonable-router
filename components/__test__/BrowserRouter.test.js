@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, shallow, mount } from 'enzyme';
+import { render, mount } from 'enzyme';
 
 import { createMemoryHistory } from 'history';
 
@@ -13,13 +13,14 @@ describe('<BrowserRouter />', () => {
 	const routeConfig = {
 		routes: {
 			'/': { component: Page },
+			'/redirect': { redirectTo: '/' },
 		},
 		miss: NotFound,
 	};
 
 	const history = (page) => createMemoryHistory({ initialEntries: [page] });
 
-	it('renders a page when the route matches', () => {
+	xit('renders a page when the route matches', () => {
 		const result = mount(
 			<BrowserRouter routeConfig={routeConfig} history={history('/')}>
 				<RouterMountpoint />
@@ -29,7 +30,7 @@ describe('<BrowserRouter />', () => {
 		expect(result.text()).toEqual('Page');
 	});
 
-	it('renders a miss page when the route does not match', () => {
+	xit('renders a miss page when the route does not match', () => {
 		const result = render(
 			<BrowserRouter
 				routeConfig={routeConfig}
@@ -42,7 +43,28 @@ describe('<BrowserRouter />', () => {
 		expect(result.text()).toEqual('Not Found');
 	});
 
-	it('calls the `onMiss` callback when the route does not match', () => {
+	fit('renders a the proper page when a redirect is encountered', () => {
+		const renderWithHistory = (hist) =>
+			render(
+				<BrowserRouter routeConfig={routeConfig} history={hist}>
+					<RouterMountpoint />
+				</BrowserRouter>,
+			);
+
+		const hist = history('/redirect');
+
+		expect(renderWithHistory(hist).text()).toEqual('Page');
+		expect(hist.location.pathname).toEqual('/');
+		expect(hist.entries.length).toEqual(2);
+
+		hist.push('/redirect');
+
+		expect(renderWithHistory(hist).text()).toEqual('Page');
+		expect(hist.location.pathname).toEqual('/');
+		expect(hist.entries.length).toEqual(4);
+	});
+
+	xit('calls the `onMiss` callback when the route does not match', () => {
 		const onMiss = jest.fn();
 
 		render(
@@ -58,7 +80,7 @@ describe('<BrowserRouter />', () => {
 		expect(onMiss).toBeCalled();
 	});
 
-	it('renders a new page when the route changes', () => {
+	xit('renders a new page when the route changes', () => {
 		const hist = history('/another-page');
 
 		const before = render(
@@ -79,7 +101,7 @@ describe('<BrowserRouter />', () => {
 		expect(after.text()).toEqual('Page');
 	});
 
-	it('calls the `onChange` callback when the route changes', () => {
+	xit('calls the `onChange` callback when the route changes', () => {
 		const hist = history('/another-page');
 		const onChange = jest.fn();
 
@@ -98,21 +120,24 @@ describe('<BrowserRouter />', () => {
 	});
 
 	describe('context', () => {
-		const hist = history('/another-page');
-
 		const ContextGrabber = () => null;
+		let hist, wrapper, context;
 
-		const wrapper = mount(
-			<BrowserRouter routeConfig={routeConfig} history={hist}>
-				<Context.Consumer>
-					{(context) => <ContextGrabber context={context} />}
-				</Context.Consumer>
-			</BrowserRouter>,
-		);
+		beforeEach(() => {
+			hist = history('/another-page');
 
-		const { context } = wrapper.find(ContextGrabber).props();
+			wrapper = mount(
+				<BrowserRouter routeConfig={routeConfig} history={hist}>
+					<Context.Consumer>
+						{(context) => <ContextGrabber context={context} />}
+					</Context.Consumer>
+				</BrowserRouter>,
+			);
 
-		it('supplies the proper location', () => {
+			context = wrapper.find(ContextGrabber).props().context;
+		});
+
+		xit('supplies the proper location', () => {
 			const expectedLocation = {
 				hash: '',
 				pathname: '/another-page',
@@ -123,11 +148,11 @@ describe('<BrowserRouter />', () => {
 			expect(context.currentLocation).toMatchObject(expectedLocation);
 		});
 
-		it('supplies the proper routes', () => {
+		xit('supplies the proper routes', () => {
 			expect(context.routes).toEqual(routeConfig.routes);
 		});
 
-		it('supplies the proper push function', () => {
+		xit('supplies the proper push function', () => {
 			const { push } = context;
 			push('/a-new-page');
 

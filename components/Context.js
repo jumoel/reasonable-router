@@ -6,6 +6,7 @@ const routerRenderProperties = {
 	params: {},
 	Component: () => null,
 	isMiss: false,
+	isRedirect: false,
 };
 const currentLocation = {
 	hash: '',
