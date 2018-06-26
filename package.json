@@ -48,7 +48,7 @@
 		"coveralls": "^3.0.0",
 		"enzyme": "^3.1",
 		"enzyme-adapter-react-16": "^1.0.1",
-		"eslint": "^4.1.1",
+		"eslint": "^5.0.1",
 		"eslint-config-prettier": "^2.0.0",
 		"eslint-plugin-babel": "^5.0.0",
 		"eslint-plugin-prettier": "^2.0.1",
